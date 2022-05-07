@@ -14,13 +14,13 @@
 
 既然我们可以通过网络访问其他计算机，那么如何区别不同的计算机呢？通过IP地址，我们就可以区分不同的计算机了：
 
-![img](assets/javaweb/src=http%3A%2F%2Fimg.it610.com%2Fimage%2Finfo5%2Facf4321f34144b69811bdde9bec045c8.jpg&refer=http%3A%2F%2Fimg.it610.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg)
+![image-20220507155634112](javaweb.assets/image-20220507155634112.png)
 
 每一台电脑在同一个网络上都有一个自己的IP地址，用于区别于其他的电脑，我们可以通过对方主机的IP地址对其进行访问。那么我手机连接的移动流量，能访问到连接家里路由器的电脑吗？（不能，因为他们不属于同一个网络）
 
 而我们的电脑上可能运行着大量的程序，每一个程序可能都需要通过网络来访问其他计算机，那这时该如何区分呢？我们可以通过端口号来区分：
 
-![img](assets/javaweb/src=http%3A%2F%2Fimg2020.cnblogs.com%2Fblog%2F2068098%2F202008%2F2068098-20200808153937940-609503998.png&refer=http%3A%2F%2Fimg2020.cnblogs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg)
+![image-20220507155647504](javaweb.assets/image-20220507155647504.png)
 
 因此，我们一般看到的是这样的：`192.168.0.11:8080`，通过`IP:端口`的形式来访问目标主机上的一个应用程序服务。注意端口号只能是0-65535之间的值！
 
@@ -31,7 +31,7 @@ TCP和UDP是两种不同的传输层协议：
 * TCP：当一台计算机想要与另一台计算机通讯时，两台计算机之间的通信需要畅通且可靠（会进行三次握手，断开也会进行四次挥手），这样才能保证正确收发数据，因此TCP更适合一些可靠的数据传输场景。
 * UDP：它是一种无连接协议，数据想发就发，而且不会建立可靠传输，也就是说传输过程中有可能会导致部分数据丢失，但是它比TCP传输更加简单高效，适合视频直播之类的。
 
-![img](assets/javaweb/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20200212%2F0f3d7f77442643c099dddbb159a183f6.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg)
+![image-20220507155703741](javaweb.assets/image-20220507155703741.png)
 
 ***
 
@@ -222,7 +222,7 @@ socket.setKeepAlive(true);
 
 TCP在传输过程中，实际上会有一个缓冲区用于数据的发送和接收：
 
-![img](assets/javaweb/src=http%3A%2F%2Fpic1.zhimg.com%2Fv2-72f5d4bebca1242a163cbd1ebff3cdbc_b.jpg&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg)
+![image-20220507155718211](javaweb.assets/image-20220507155718211.png)
 
 此缓冲区大小为：8192，我们可以手动调整其大小来优化传输效率：
 
