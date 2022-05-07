@@ -1161,6 +1161,11 @@ public static void main(String[] args) {
   readOnly="true"/>
 ```
 
+- eviction：清除策略 LRU|FIFO|SOFT|WEAK
+- flushInterval:自动清除时间间隔
+- size:引用数目大小，最多有多少个mapper对象，默认1024
+- readOnly：（只读）属性可以被设置为 true 或 false。只读的缓存会给所有调用者返回缓存对象的相同实例。 因此这些对象不能被修改。这就提供了可观的性能提升。而可读写的缓存会（通过序列化）返回缓存对象的拷贝。 速度上会慢一些，但是更安全，因此默认值是 false。
+
 我们来编写一个代码：
 
 ```java
@@ -1181,7 +1186,9 @@ public static void main(String[] args) {
 
 我们可以看到，上面的代码中首先是第一个会话在进行读操作，完成后会结束会话，而第二个操作重新创建了一个新的会话，再次执行了同样的查询，我们发现得到的依然是缓存的结果。
 
-那么如果我不希望某个方法开启缓存呢？我们可以添加useCache属性来关闭缓存：
+那么如果我不希望某个方法开启缓存呢？我们可以添加`useCache`属性来关闭缓存：
+
+useCache:将其设置为true后，将会导致本条语句的结果被二级缓存缓存起来，默认值：对select元素为`true`，因为这个mapper设置了`二级缓存`，一般设置false来单独对某个命令不设置缓存。
 
 ```xml
 <select id="getStudentBySid" resultType="Student" useCache="false">
@@ -1189,7 +1196,7 @@ public static void main(String[] args) {
 </select>
 ```
 
-我们也可以使用flushCache="false"在每次执行后都清空缓存，通过这这个我们还可以控制DML操作完成之后不清空缓存。
+我们也可以使用`flushCache="true"`在每次执行后本地缓存和二级缓存都会清空，通过`flushCache="false"`我们还可以控制DML操作完成之后不清空一级本地缓存。
 
 ```xml
 <select id="getStudentBySid" resultType="Student" flushCache="true">
@@ -1197,7 +1204,7 @@ public static void main(String[] args) {
 </select>
 ```
 
-添加了二级缓存之后，会先从二级缓存中查找数据，当二级缓存中没有时，才会从一级缓存中获取，当一级缓存中都还没有数据时，才会请求数据库，因此我们再来执行上面的代码：
+添加了二级缓存之后，会**先从二级缓存中查找数据，当二级缓存中没有时，才会从一级缓存中获取，当一级缓存中都还没有数据时，才会请求数据库**，因此我们再来执行上面的代码：
 
 ```java
 public static void main(String[] args) {
@@ -1211,7 +1218,7 @@ public static void main(String[] args) {
         }
 
         Student student1 = testMapper.getStudentBySid(1);
-        System.out.println(student1 == student2);
+        System.out.println(student1 == student2);	// true
     }
 }
 ```
@@ -1220,9 +1227,11 @@ public static void main(String[] args) {
 
 读取顺序：二级缓存 => 一级缓存 => 数据库
 
+## 缓存内容不同步
+
 ![img](assets/mybatis/src=http%3A%2F%2Fupload-images.jianshu.io%2Fupload_images%2F2176079-2e6599c454e7af19.png&refer=http%3A%2F%2Fupload-images.jianshu.io&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg)
 
-虽然缓存机制给我们提供了很大的性能提升，但是缓存存在一个问题，我们之前在`计算机组成原理`中可能学习过缓存一致性问题，也就是说当多个CPU在操作自己的缓存时，可能会出现各自的缓存内容不同步的问题，而Mybatis也会这样，我们来看看这个例子：
+虽然缓存机制给我们提供了很大的性能提升，但是缓存存在一个问题，我们之前在**计算机组成原理**中可能学习过缓存一致性问题，也就是说当多个CPU在操作自己的缓存时，可能会出现各自的**缓存内容不同步**的问题，而Mybatis也会这样，我们来看看这个例子：
 
 ```java
 public static void main(String[] args) throws InterruptedException {
@@ -1238,7 +1247,9 @@ public static void main(String[] args) throws InterruptedException {
 
 我们现在循环地每三秒读取一次，而在这个过程中，我们使用IDEA手动修改数据库中的数据，将1号同学的学号改成100，那么理想情况下，下一次读取将无法获取到小明，因为小明的学号已经发生变化了。
 
-但是结果却是依然能够读取，并且sid并没有发生改变，这也证明了Mybatis的缓存在生效，因为我们是从外部进行修改，Mybatis不知道我们修改了数据，所以依然在使用缓存中的数据，但是这样很明显是不正确的，因此，如果存在多台服务器或者是多个程序都在使用Mybatis操作同一个数据库，并且都开启了缓存，需要解决这个问题，要么就得关闭Mybatis的缓存来保证一致性：
+但是结果却是依然能够读取，并且sid并没有发生改变，这也证明了Mybatis的缓存在生效，因为我们是**从外部进行修改**，Mybatis不知道我们修改了数据，所以依然在使用缓存中的数据，但是这样很明显是不正确的，因此，如果存在多台服务器或者是多个程序都在使用Mybatis操作同一个数据库，并且都开启了缓存，需要解决这个问题，
+
+就得关闭Mybatis的缓存来保证一致性：
 
 ```xml
 <settings>
@@ -1246,17 +1257,23 @@ public static void main(String[] args) throws InterruptedException {
 </settings>
 ```
 
+或者指令不使用缓存：
+
 ```xml
 <select id="getStudentBySid" resultType="Student" useCache="false" flushCache="true">
     select * from student where sid = #{sid}
 </select>
 ```
 
-要么就需要实现缓存共用，也就是让所有的Mybatis都使用同一个缓存进行数据存取，在后面，我们会继续学习Redis、Ehcache、Memcache等缓存框架，通过使用这些工具，就能够很好地解决缓存一致性问题。
+要么就需要实现缓存共用，也就是让所有的机器所有的程序的Mybatis都使用同一个缓存进行数据存取，可以保证都使用的是同一个缓存数据，比如DML操作后，都是操作的一个缓存，所以最后这些程序调用的还是一个缓存，可以保证一致性，但是这个一样无法解决手动修改了数据库导致的缓存失效。
+
+一般通过`Redis`、`Ehcache`、`Memcache`等缓存框架，使用这些工具，就能够很好地解决缓存一致性问题。
 
 # 使用注解开发
 
-在之前的开发中，我们已经体验到Mybatis为我们带来的便捷了，我们只需要编写对应的映射器，并将其绑定到一个接口上，即可直接通过该接口执行我们的SQL语句，极大的简化了我们之前JDBC那样的代码编写模式。那么，能否实现无需xml映射器配置，而是直接使用注解在接口上进行配置呢？答案是可以的，也是现在推荐的一种方式（也不是说XML就不要去用了，由于Java 注解的表达能力和灵活性十分有限，可能相对于XML配置某些功能实现起来会不太好办，但是在大部分场景下，直接使用注解开发已经绰绰有余了）
+在之前的开发中，我们已经体验到Mybatis为我们带来的便捷了，我们只需要编写对应的映射器，并将其绑定到一个接口上，即可直接通过该接口执行我们的SQL语句，极大的简化了我们之前JDBC那样的代码编写模式。那么，能否实现无需xml映射器配置，而是直接使用注解在接口上进行配置呢？答案是可以的，也是现在推荐的一种方式（也不是说XML就不要去用了，由于Java注解的表达能力和灵活性十分有限，可能相对于XML配置某些功能实现起来会不太好办，但是在大部分场景下，直接使用注解开发已经绰绰有余了）
+
+## 基本查询
 
 首先我们来看一下，使用XML进行映射器编写时，我们需要现在XML中定义映射规则和SQL语句，然后再将其绑定到一个接口的方法定义上，然后再使用接口来执行：
 
@@ -1286,7 +1303,7 @@ int addStudent(Student student);
 </mappers>
 ```
 
-通过直接指定Class，来让Mybatis知道我们这里有一个通过注解实现的映射器。
+通过直接指定`Class`，而不是之前的`resource`，来让Mybatis知道我们这里有一个通过注解实现的映射器。
 
 我们接着来看一下，如何使用注解进行自定义映射规则：
 
@@ -1310,20 +1327,27 @@ List<Student> getAllStudent();
 </resultMap>
 ```
 
-现在我们就可以通过注解来自定义映射规则了。那么如何使用注解来完成复杂查询呢？我们还是使用一个老师多个学生的例子：
+现在我们就可以通过注解来自定义映射规则了。
+
+## 复杂查询
+
+那么如何使用注解来完成复杂查询呢？我们还是使用一个老师多个学生的例子：
 
 ```java
 @Results({
-        @Result(id = true, column = "tid", property = "tid"),
-        @Result(column = "name", property = "name"),
-        @Result(column = "tid", property = "studentList", many =
-            @Many(select = "getStudentByTid")
-        )
+  // 2.映射老师表中的前两个数据
+  @Result(id = true, column = "id", property = "id"),
+  @Result(column = "name", property = "name"),
+  // 这里的many=@Many表示将@Many(select)子查询的结果拿出来当做集合，这里的column表示传入子查询的参数，然后映射到property
+  @Result(column = "id", property = "students", many =
+          @Many(select = "getStudentByTid")
+         )
 })
-@Select("select * from teacher where tid = #{tid}")
-Teacher getTeacherBySid(int tid);
+// 1.首先查询指定的老师
+@Select("select * from teacher where id = #{tid}")
+Teacher getTeacherByTid(int tid);
 
-@Select("select * from student inner join teach on student.sid = teach.sid where tid = #{tid}")
+@Select("select * from student inner join teach on student.id = teach.sid where tid = #{tid}")
 List<Student> getStudentByTid(int tid);
 ```
 
@@ -1356,7 +1380,7 @@ List<Student> getStudentByTid(int tid);
 List<Student> getAllStudent();
 ```
 
-如果现在我希望直接使用注解编写SQL语句但是我希望映射规则依然使用XML来实现，这时该怎么办呢？
+如果现在我希望直接使用注解编写SQL语句但是我希望**映射规则依然使用XML**来实现，这时该怎么办呢？
 
 ```java
 @ResultMap("test")
@@ -1365,6 +1389,8 @@ List<Student> getAllStudent();
 ```
 
 提供了`@ResultMap`注解，直接指定ID即可，这样我们就可以使用XML中编写的映射规则了，这里就不再演示了。
+
+## 构造冲突
 
 那么如果出现之前的两个构造方法的情况，且没有任何一个构造方法匹配的话，该怎么处理呢？
 
@@ -1399,6 +1425,8 @@ Student getStudentBySidAndSex(@Param("sid") int sid, @Param("sex") String sex);
 ```
 
 得到的结果和使用`constructor`标签效果一致，这里就不多做讲解了。
+
+## 多参数
 
 我们发现，当参数列表中出现两个以上的参数时，会出现错误：
 
@@ -1456,12 +1484,14 @@ int addStudent(@Param("sid") int sid, @Param("student")  Student student);
 	at com.test.Main.main(Main.java:16)
 ```
 
-那么我们就通过参数名称.属性的方式去让Mybatis知道我们要用的是哪个属性：
+那么我们就通过`参数名称.属性`的方式去让Mybatis知道我们要用的是哪个属性：
 
 ```java
 @Insert("insert into student(sid, name, sex) values(#{sid}, #{student.name}, #{student.sex})")
 int addStudent(@Param("sid") int sid, @Param("student")  Student student);
 ```
+
+### 缓存控制
 
 那么如何通过注解控制缓存机制呢？
 
@@ -1474,13 +1504,15 @@ public interface MyMapper {
     List<Student> getAllStudent();
 ```
 
-使用`@CacheNamespace`注解直接定义在接口上即可，然后我们可以通过使用`@Options`来控制单个操作的缓存启用。
+使用`@CacheNamespace`注解直接定义在接口上即可，这是对整个mapper的定义，然后我们可以通过使用`@Options`来控制单个操作的缓存启用。
 
 # 探究Mybatis的动态代理机制
 
 在探究动态代理机制之前，我们要先聊聊什么是代理：其实顾名思义，就好比我开了个大棚，里面栽种的西瓜，那么西瓜成熟了是不是得去卖掉赚钱，而我们的西瓜非常多，一个人肯定卖不过来，肯定就要去多找几个开水果摊的帮我们卖，这就是一种代理。实际上是由水果摊老板在帮我们卖瓜，我们只告诉老板卖多少钱，而至于怎么卖的是由水果摊老板决定的。
 
-![img](https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2F2020112311143434.png%3Fx-oss-process%26%2361%3Bimage%2Fwatermark%2Ctype_ZmFuZ3poZW5naGVpdGk%2Cshadow_10%2Ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hhdHR5MTkyMA%26%2361%3B%26%2361%3B%2Csize_16%2Ccolor_FFFFFF%2Ct_7&refer=http%3A%2F%2Fimg-blog.csdnimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1639472394&t=b5590551c75049e91fc497b9920bdb83)
+![image-20220507221642758](assets/mybatis/image-20220507221642758.png)
+
+## 静态代理
 
 那么现在我们来尝试实现一下这样的类结构，首先定义一个接口用于规范行为：
 
@@ -1536,13 +1568,16 @@ public class ShopperProxy implements Shopper{
 ```java
 public class Main {
     public static void main(String[] args) {
+        // 传入的new ShopperImpl()还是商家的实现类，并不是代理商的，代理商只是在卖瓜之前进行了一些操作
         Shopper shopper = new ShopperProxy(new ShopperImpl());
         shopper.saleWatermelon("小强");
     }
 }
 ```
 
-这样的操作称为静态代理，也就是说我们需要提前知道接口的定义并进行实现才可以完成代理，而Mybatis这样的是无法预知代理接口的，我们就需要用到动态代理。
+这样的操作称为**静态代理**，也就是说我们**需要提前知道接口的定义并进行实现才可以完成代理**，而Mybatis这样的是无法预知代理接口的，我们就需要用到动态代理。
+
+## 动态代理
 
 JDK提供的反射框架就为我们很好地解决了动态代理的问题，在这里相当于对JavaSE阶段反射的内容进行一个补充。
 
