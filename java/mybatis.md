@@ -4,15 +4,13 @@
 
 再次强调：学习厉害的框架或是厉害的技术，并不是为了一定要去使用它，而是它们能够使得我们在不同的开发场景下，合理地使用这些技术，以灵活地应对需要解决的问题。
 
-![img](assets/mybatis/src=http%3A%2F%2Fupload-images.jianshu.io%2Fupload_images%2F26720164-60462fc7927f8784.jpg&refer=http%3A%2F%2Fupload-images.jianshu.io&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg)
+![image-20220507195145840](assets/mybatis/image-20220507195145840.png)
 
-MyBatis 是一款优秀的持久层框架，它支持定制化 SQL、存储过程以及高级映射。`MyBatis 避免了几乎所有的 JDBC 代码`和`手动设置参数以及获取结果集`。MyBatis 可以使用简单的 XML 或注解来配置和映射原生信息，将接口和 Java 的 POJOs(Plain Ordinary Java Object,普通的 Java对象)映射成数据库中的记录。
+MyBatis 是一款优秀的持久层框架，它支持定制化 SQL、存储过程以及高级映射。**MyBatis避免了几乎所有的JDBC代码和手动设置参数以及获取结果集**。MyBatis 可以使用简单的 XML 或注解来配置和映射原生信息，将接口和 Java 的 POJOs(Plain Ordinary Java Object,普通的 Java对象)映射成数据库中的记录。
 
 我们依然使用传统的jar依赖方式，从最原始开始讲起，不使用Maven，有关Maven内容我们会在后面统一讲解！全程围绕官方文档讲解！
 
 这一块内容很多很杂，再次强调要多实践！
-
-![image-20220507123616008](/Users/easylee/Library/Application Support/typora-user-images/image-20220507123616008.png)
 
 # XML语言概述
 
@@ -47,7 +45,7 @@ XML文件也可以使用注释：
 <!-- 注释内容 -->
 ```
 
-通过IDEA我们可以使用`Ctrl`+`/`来快速添加注释文本（不仅仅适用于XML，还支持很多种类型的文件）
+通过IDEA我们可以使用`Ctrl+/`来快速添加注释文本（不仅仅适用于XML，还支持很多种类型的文件）
 
 如果嫌一个一个改太麻烦，也可以使用CD来快速创建不解析区域：
 
@@ -136,7 +134,7 @@ try {
 </environments>
 ```
 
-我们发现，在最上方还引入了一个叫做DTD（文档类型定义）的东西，它提前帮助我们规定了一些标签，我们就需要使用Mybatis提前帮助我们规定好的标签来进行配置（因为只有这样Mybatis才能正确识别我们配置的内容）
+我们发现，在最上方还引入了一个叫做`DTD`（文档类型定义）的东西，它提前帮助我们规定了一些标签，我们就需要使用Mybatis提前帮助我们规定好的标签来进行配置（因为只有这样Mybatis才能正确识别我们配置的内容）
 
 通过进行配置，我们就告诉了Mybatis我们链接数据库的一些信息，包括URL、用户名、密码等，这样Mybatis就知道该链接哪个数据库、使用哪个账号进行登陆了（也可以不使用配置文件，这里不做讲解，还请各位小伙伴自行阅读官方文档）
 
@@ -157,7 +155,7 @@ public static void main(String[] args) throws FileNotFoundException {
 
 直接运行即可，虽然没有干什么事情，但是不会出现错误，如果之前的配置文件编写错误，直接运行会产生报错！那么现在我们来看看，`SqlSessionFactory`对象是什么东西：
 
-![img](assets/mybatis/src=http%3A%2F%2Fwww.h5w3.com%2Fwp-content%2Fuploads%2F2021%2F01%2F1460000039107464.png&refer=http%3A%2F%2Fwww.h5w3.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg)
+![image-20220507195203922](assets/mybatis/image-20220507195203922.png)
 
 每个基于 MyBatis 的应用都是以一个 SqlSessionFactory 的实例为核心的，我们可以通过`SqlSessionFactory`来创建多个新的会话，`SqlSession`对象，每个会话就相当于我不同的地方登陆一个账号去访问数据库，你也可以认为这就是之前JDBC中的`Statement`对象，会话之间相互隔离，没有任何关联。
 
@@ -314,7 +312,7 @@ public interface TestMapper {
 
 ### 创建mapper.xml配置文件
 
-将Mapper文件的命名空间修改为我们的接口，建议同时将其放到同名包中，`作为内部资源`：
+将Mapper文件的命名空间修改为我们的接口，建议同时将其放到同名包中，**作为内部资源**：
 
 ```xml
 <mapper namespace="com.test.mapper.TestMapper">
@@ -458,7 +456,7 @@ public class Student {
 
 在前面我们演示了如何快速进行查询，我们只需要编写一个对应的映射器既可以了
 
-`映射到实体类`
+### 映射到实体类
 
 ```xml
 <mapper namespace="com.test.mapper.TestMapper">
@@ -468,7 +466,7 @@ public class Student {
 </mapper>
 ```
 
-当然，如果你不喜欢使用实体类，那么这些属性还可以被`映射到一个Map`上：
+当然，如果你不喜欢使用实体类，那么这些属性还可以被**映射到一个Map**上：
 
 ```xml
 <select id="selectStudent" resultType="Map">
@@ -484,7 +482,7 @@ public interface TestMapper {
 
 Map中就会以键值对的形式来存放这些结果了。
 
-通过设定一个`resultType`属性，让Mybatis知道查询结果需要映射为哪个实体类，`要求字段名称保持一致`。
+通过设定一个`resultType`属性，让Mybatis知道查询结果需要映射为哪个实体类，**要求字段名称保持一致**。
 
 如果不一致，那么就只能自己来设置数据库结果集和实体类属性的一一映射关系，我们可以自定义`resultMap`来设定映射规则：
 
@@ -517,7 +515,7 @@ Map中就会以键值对的形式来存放这些结果了。
 
 ### 映射实体类存在多个构造方法
 
-`映射会调用构造方法`
+**映射会调用构造方法**
 
 如果一个类中存在多个构造方法，那么很有可能会出现这样的错误：
 
@@ -655,9 +653,9 @@ public class Teacher {
 
 可以看到，我们的查询结果是一个多表联查的结果，而联查的数据就是我们需要映射的数据（比如这里是一个老师有N个学生，联查的结果也是这一个老师对应N个学生的N条记录），其中`id`标签用于在多条记录中辨别是否为同一个对象的数据，比如上面的查询语句得到的结果中，`tid`这一行始终为`1`，因此所有的记录都应该是`tid=1`的教师的数据，而不应该变为多个教师的数据，如果不加id进行约束，那么会被识别成多个教师的数据！
 
-也就是说查询出多条记录，每条记录都包含tid=1的教师数据，因为这些数据都是组合数据，如果不设主键id的，那么每条记录都是独立的记录，就代表即使tid都为1，同样识别为不同的老师，那么就有多个老师了，但是`设置tid为id主键，主键不能重复，只能将主键相同的记录识别为一个集合`。
+也就是说查询出多条记录，每条记录都包含tid=1的教师数据，因为这些数据都是组合数据，如果不设主键id的，那么每条记录都是独立的记录，就代表即使tid都为1，同样识别为不同的老师，那么就有多个老师了，但是**设置tid为id主键，主键不能重复，只能将主键相同的记录识别为一个集合**。
 
-`通过使用collection来表示将得到的所有结果合并为一个集合`，比如上面的数据中每个学生都有单独的一条记录，因此tid相同的全部学生的记录就可以最后合并为一个List，得到最终的映射结果，当然，为了区分，最好也设置一个id，只不过这个例子中可以当做普通的`result`使用
+**通过使用collection来表示将得到的所有结果合并为一个集合**，比如上面的数据中每个学生都有单独的一条记录，因此tid相同的全部学生的记录就可以最后合并为一个List，得到最终的映射结果，当然，为了区分，最好也设置一个id，只不过这个例子中可以当做普通的`result`使用
 
 这里设置id，那么有多个id不同的学生，那么就不是一个集合，如果还是id重复，那么又会出现一个集合。
 
@@ -746,7 +744,321 @@ try (SqlSession sqlSession = MybatisUtil.getSession(false)){
 
 动态 SQL 是 MyBatis 的强大特性之一。如果你使用过 JDBC 或其它类似的框架，你应该能理解根据不同条件拼接 SQL 语句有多痛苦，例如拼接时要确保不能忘记添加必要的空格，还要注意去掉列表最后一个列名的逗号。利用动态 SQL，可以彻底摆脱这种痛苦。
 
-我们直接使用官网的例子进行讲解。
+如果你之前用过 JSTL 或任何基于类 XML 语言的文本处理器，你对动态 SQL 元素可能会感觉似曾相识。
+
+借助功能强大的基于 OGNL 的表达式，MyBatis 3 替换了之前的大部分元素，大大精简了元素种类，现在要学习的元素种类比原来的一半还要少。
+
+- if
+- choose (when, otherwise)
+- trim (where, set)
+- foreach
+
+## if语句
+
+前面我们通过实例讲解了用mybatis对一张表进行的CRUD操作，但是我们发现写的 SQL 语句都比较简单，如果有比较复杂的业务，我们需要写复杂的`SQL`语句，往往需要拼接，而拼接SQL ，稍微不注意，由于引号，空格等缺失可能都会导致错误。
+
+那么怎么去解决这个问题呢？这就是本篇所讲的使用 mybatis 动态SQL，通过 if, choose, when, otherwise, trim, where, set, foreach等标签，可组合成非常灵活的SQL语句，从而在提高 SQL 语句的准确性的同时，也大大提高了开发人员的效率。
+
+我们以 User 表为例来说明：
+
+![img](assets/mybatis/1120165-20170805120304397-3670858.png)
+
+根据`username`和`sex`来查询数据。如果username为空，那么将只根据sex来查询；反之只根据username来查询
+
+首先不使用动态SQL来书写
+
+```xml
+<select id="selectUserByUsernameAndSex"
+        resultType="user" parameterType="com.harvey.java01.entity.User">
+    select * from user where username=#{username} and sex=#{sex}
+</select>
+```
+
+上面的查询语句，我们可以发现，如果 #{username} 为空，这里的为空并不是不传这个参数，而是传入的参数值是`null`,那么查询结果也是空，如何解决这个问题呢？使用`if`来判断 
+
+```xml
+<select id="selectUserByUsernameAndSex" resultType="user" parameterType="com.harvey.java01.entity.User">
+    select * from user where
+        <if test="username != null">
+           username=#{username}
+        </if>
+         
+        <if test="sex != null">
+           and sex=#{sex}
+        </if>
+</select>
+```
+
+这样写我们可以看到，如果 sex 等于 null，那么查询语句为 `select * from user where username=#{username}`，但是如果usename 为空呢？那么查询语句为 `select * from user where and sex=#{sex}`，这是错误的 SQL 语句，如何解决呢？请看下面的 where 语句
+
+## if+where 语句
+
+```xml
+<select id="selectUserByUsernameAndSex" resultType="user" parameterType="com.harvey.java01.entity.User">
+    select * from user
+    <where>
+        <if test="username != null">
+           username=#{username}
+        </if>
+         
+        <if test="sex != null">
+           and sex=#{sex}
+        </if>
+    </where>
+</select>
+```
+
+这个`where`标签会知道如果它包含的标签中有返回值的话，它就插入一个‘where’。此外，如果标签返回的内容是以`AND` 或`OR` 开头的，则它会剔除掉。
+
+## if+set 语句
+
+同理，上面的对于查询 SQL 语句包含 where 关键字，如果在进行更新操作的时候，含有 set 关键词，我们怎么处理呢？
+
+```xml
+<!-- 根据 id 更新 user 表的数据 -->
+<update id="updateUserById" parameterType="com.harvey.java01.entity.User">
+    update user u
+        <set>
+            <if test="username != null and username != ''">
+                u.username = #{username},
+            </if>
+            <if test="sex != null and sex != ''">
+                u.sex = #{sex}
+            </if>
+        </set>
+     
+     where id=#{id}
+</update>
+```
+
+这样写，如果第一个条件 username 为空，那么 sql 语句为：`update user u set u.sex=? where id=?`
+
+如果第一个条件不为空，那么 sql 语句为：`update user u set u.username = ? ,u.sex = ? where id=?`
+
+## choose(when,otherwise) 语句
+
+有时候，我们不想用到所有的查询条件，只想选择其中的一个，查询条件有一个满足即可，使用 choose 标签可以解决此类问题，类似于 Java 的 switch 语句
+
+```xml
+<select id="selectUserByChoose" resultType="com.harvey.java01.entity.User" parameterType="com.harvey.java01.entity.User">
+    select * from user
+    <where>
+        <choose>
+            <when test="id !='' and id != null">
+                id=#{id}
+            </when>
+            <when test="username !='' and username != null">
+                and username=#{username}
+            </when>
+            <otherwise>
+                and sex=#{sex}
+            </otherwise>
+        </choose>
+    </where>
+</select>
+```
+
+也就是说，这里我们有三个条件，id,username,sex，只能选择一个作为查询条件
+
+如果 id 不为空，那么查询语句为：`select * from user where  id=?`
+
+如果 id 为空，那么看username 是否为空，如果不为空，那么语句为 `select * from user where username=?;`
+
+如果 username 为空，那么查询语句为 `select * from user where sex=?`
+
+## trim 语句
+
+trim标记是一个格式化的标记，可以完成set或者是where标记的功能
+
+用 `trim` 改写上面的 if+where语句:
+
+```xml
+<select id="selectUserByUsernameAndSex" resultType="user" parameterType="com.harvey.java01.entity.User">
+    select * from user
+    <!-- <where>
+            <if test="username != null">
+               username=#{username}
+            </if>
+
+            <if test="sex != null">
+               and sex=#{sex}
+            </if>
+        </where>  -->
+    <trim prefix="where" prefixOverrides="and | or">
+        <if test="username != null">
+            and username=#{username}
+        </if>
+        <if test="sex != null">
+            and sex=#{sex}
+        </if>
+    </trim>
+</select>
+```
+
+`prefix`：前缀
+
+`prefixoverride`：去掉第一个and或者是or
+
+用 trim 改写上面的 if+set 语句:
+
+```xml
+<!-- 根据 id 更新 user 表的数据 -->
+<update id="updateUserById" parameterType="com.ys.po.User">
+    update user u
+        <!-- <set>
+                <if test="username != null and username != ''">
+                    u.username = #{username},
+                </if>
+                <if test="sex != null and sex != ''">
+                    u.sex = #{sex}
+                </if>
+            </set> -->
+    <trim prefix="set" suffixOverrides=",">
+        <if test="username != null and username != ''">
+            u.username = #{username},
+        </if>
+        <if test="sex != null and sex != ''">
+            u.sex = #{sex},
+        </if>
+    </trim>
+
+    where id=#{id}
+</update>
+```
+
+`suffix`：后缀
+
+`suffixoverride`：去掉最后一个逗号（也可以是其他的标记，就像是上面前缀中的and一样）
+
+## SQL片段
+
+有时候可能某个 sql 语句我们用的特别多，为了增加代码的重用性，简化代码，我们需要将这些代码抽取出来，然后使用时直接调用。
+
+比如：假如我们需要经常根据用户名和性别来进行联合查询，那么我们就把这个代码抽取出来，如下：
+
+```xml
+<!-- 定义 sql 片段 -->
+<sql id="selectUserByUserNameAndSexSQL">
+    <if test="username != null and username != ''">
+        AND username = #{username}
+    </if>
+    <if test="sex != null and sex != ''">
+        AND sex = #{sex}
+    </if>
+</sql>
+```
+
+引用 sql 片段
+
+```xml
+<select id="selectUserByUsernameAndSex" resultType="user" parameterType="com.harvey.java01.entity.User">
+    select * from user
+    <trim prefix="where" prefixOverrides="and | or">
+        <!-- 引用 sql 片段，如果refid 指定的不在本文件中，那么需要在前面加上 namespace -->
+        <include refid="selectUserByUserNameAndSexSQL"></include>
+        <!-- 在这里还可以引用其他的 sql 片段 -->
+    </trim>
+</select>
+```
+
+> - 最好基于单表来定义sql片段，提高片段的可重用性
+>
+> - 在sql片段中最好不要包括where 
+
+## foreach 语句
+
+需求：我们需要查询 user 表中 id 分别为1,2,3的用户
+
+sql语句：`select * from user where id=1 or id=2 or id=3`或`select * from user where id in (1,2,3)`
+
+
+
+我们用 foreach 来改写 `select * from user where id=1 or id=2 or id=3`
+
+```xml
+<select id="selectUserByListId" parameterType="java.util.List" resultType="com.harvey.java01.entity.User">
+	select * from user
+	<where>
+		<!--
+			collection:指定输入对象中的集合属性
+			item:每次遍历生成的对象
+			open:开始遍历时的拼接字符串
+			close:结束时拼接的字符串
+			separator:遍历对象之间需要拼接的字符串
+			select * from user where 1=1 and (id=1 or id=2 or id=3)
+		  -->
+		<foreach collection="list" item="id" open="and (" close=")" separator="or">
+			id=#{id}
+		</foreach>
+	</where>
+</select>
+```
+
+你可以将任何可迭代对象（如 List、Set 等）、Map 对象或者数组对象作为集合参数传递给foreach。当使用可迭代对象或者数组时，index 是当前迭代的序号，item 的值是本次迭代获取到的元素。当使用 Map 对象（或者 Map.Entry 对象的集合）时，index 是键，item 是值。
+
+在使用foreach的时候最关键的也是最容易出错的就是`collection`属性，该属性是必须指定的，**而且必须是一个集合**，但是在不同情况下，该属性的值是不一样的，主要有一下3种情况：
+
+1. 如果传入的是单参数且参数类型是一个List的时候，collection属性值为list
+2. 如果传入的是单参数且参数类型是一个array数组的时候，collection的属性值为array
+3. 如果传入的参数是多个的时候，我们就需要把它们封装成一个Map了，collection的属性值为map里面集合的key值
+
+```xml
+<select id="dynamicForeach3Test" parameterType="java.util.HashMap" resultType="Blog">
+  select * from t_blog where title like "%"#{title}"%" and id in
+  <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+    #{item}
+  </foreach>
+</select>
+```
+
+前面两个传入的都是只有一个参数，一个是List，一个是Array数组，都是只传了一个参数，但是如果有多个参数的话，必须使用第三种方式，比如要传入一个`name`名称，一个`id`属性，同时还需要设置这个foreach的collection属性来通过多个值查询sql语句怎么办呢？
+
+只有使用第三种方式，创建一个map：
+
+```java
+// 先创建多个值的集合
+List ids = new ArrayList();
+ids.add(1);
+ids.add(2);
+ids.add(3);
+ids.add(6);
+ids.add(7);
+ids.add(9);
+// 创建map
+Map params = new HashMap();
+// 加入其它的多个参数
+params.put("id", 1);
+params.put("name", "小张")
+// 加入多个值的数组
+params.put("ids", ids);
+```
+
+然后将这个map传值给mapper即可，然后foreach的collection属性其实还是取的map的`ids`集合属性而已，所以上面collection属性要设置为`ids`
+
+我们用 foreach 来改写 `select * from user where id in (1,2,3)`
+
+```xml
+<select id="selectUserByListId" parameterType="java.util.List" resultType="com.harvey.java01.entity.User">
+	select * from user
+	<where>
+		<!--
+			collection:指定输入对象中的集合属性
+			item:每次遍历生成的对象
+			open:开始遍历时的拼接字符串
+			close:结束时拼接的字符串
+			separator:遍历对象之间需要拼接的字符串
+			select * from user and id in (1,2,3)
+		  -->
+		<foreach collection="list" item="id" open="id in (" close=") " separator=",">
+			#{id}
+		</foreach>
+	</where>
+</select>
+```
+
+## 总结
+
+其实动态sql语句的编写往往就是一个拼接的问题，为了保证拼接准确，我们**最好先写原生的sql语句出来**，然后在通过mybatis动态sql对照着改，防止出错。
 
 # 缓存机制
 
@@ -756,7 +1068,9 @@ MyBatis 内置了一个强大的事务性查询缓存机制，它可以非常方
 
 因此Mybatis内置了一个缓存机制，我们查询时，如果缓存中存在数据，那么我们就可以直接从缓存中获取，而不是再去向数据库进行请求。
 
-![img](assets/mybatis/src=http%3A%2F%2Fresource.shangmayuan.com%2Fdroxy-blog%2F2021%2F03%2F02%2F071d25e4f9d841e0ac9df54038d98fd0-2.png&refer=http%3A%2F%2Fresource.shangmayuan.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg)
+![image-20220507202056608](assets/mybatis/image-20220507202056608.png)
+
+## 一级缓存
 
 Mybatis存在一级缓存和二级缓存，我们首先来看一下一级缓存，默认情况下，只启用了本地的会话缓存，它仅仅对一个会话中的数据进行缓存（一级缓存无法关闭，只能调整），我们来看看下面这段代码：
 
@@ -766,7 +1080,7 @@ public static void main(String[] args) throws InterruptedException {
         TestMapper testMapper = sqlSession.getMapper(TestMapper.class);
         Student student1 = testMapper.getStudentBySid(1);
         Student student2 = testMapper.getStudentBySid(1);
-        System.out.println(student1 == student2);
+        System.out.println(student1 == student2); // true
     }
 }
 ```
@@ -790,7 +1104,7 @@ public class Student {
 
 我们通过前面的学习得知Mybatis在映射为对象时，在只有一个构造方法的情况下，无论你构造方法写成什么样子，都会去调用一次构造方法，如果存在多个构造方法，那么就会去找匹配的构造方法。我们可以通过查看构造方法来验证对象被创建了几次。
 
-结果显而易见，只创建了一次，也就是说当第二次进行同样的查询时，会直接使用第一次的结果，因为第一次的结果已经被缓存了。
+结果显而易见，**只创建了一次**，也就是说当第二次进行同样的查询时，会直接使用第一次的结果，因为第一次的结果已经被缓存了。
 
 那么如果我修改了数据库中的内容，缓存还会生效吗：
 
@@ -801,14 +1115,14 @@ public static void main(String[] args) throws InterruptedException {
         Student student1 = testMapper.getStudentBySid(1);
         testMapper.addStudent(new Student().setName("小李").setSex("男"));
         Student student2 = testMapper.getStudentBySid(1);
-        System.out.println(student1 == student2);
+        System.out.println(student1 == student2); // false
     }
 }
 ```
 
 我们发现，当我们进行了插入操作后，缓存就没有生效了，我们再次进行查询得到的是一个新创建的对象。
 
-也就是说，一级缓存，在进行DML操作后，会使得缓存失效，也就是说Mybatis知道我们对数据库里面的数据进行了修改，所以之前缓存的内容可能就不是当前数据库里面最新的内容了。还有一种情况就是，当前会话结束后，也会清理全部的缓存，因为已经不会再用到了。但是一定注意，一级缓存只针对于单个会话，多个会话之间不相通。
+也就是说，**一级缓存，在进行DML操作后，会使得缓存失效**，也就是说Mybatis知道我们对数据库里面的数据进行了修改，所以之前缓存的内容可能就不是当前数据库里面最新的内容了。还有一种情况就是，当前会话结束后，也会清理全部的缓存，因为已经不会再用到了。**一级缓存只针对于单个会话，多个会话之间不相通**。
 
 ```java
 public static void main(String[] args) {
@@ -822,12 +1136,14 @@ public static void main(String[] args) {
         }
 
         Student student1 = testMapper.getStudentBySid(1);
-        System.out.println(student1 == student2);
+        System.out.println(student1 == student2); // false
     }
 }
 ```
 
-**注意：**一个会话DML操作只会重置当前会话的缓存，不会重置其他会话的缓存，也就是说，其他会话缓存是不会更新的！
+> 一个会话DML操作，当前的mapper对象上操作，只会重置当前会话的缓存，不会重置其他会话的缓存，也就是说，其他会话缓存是不会更新的！
+
+## 二级缓存
 
 一级缓存给我们提供了很高速的访问效率，但是它的作用范围实在是有限，如果一个会话结束，那么之前的缓存就全部失效了，但是我们希望缓存能够扩展到所有会话都能使用，因此我们可以通过二级缓存来实现，二级缓存默认是关闭状态，要开启二级缓存，我们需要在映射器XML文件中添加：
 
@@ -858,7 +1174,7 @@ public static void main(String[] args) {
     try (SqlSession sqlSession2 = MybatisUtil.getSession(true)){
         TestMapper testMapper2 = sqlSession2.getMapper(TestMapper.class);
         Student student2 = testMapper2.getStudentBySid(1);
-        System.out.println(student2 == student);
+        System.out.println(student2 == student); // true
     }
 }
 ```
