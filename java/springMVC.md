@@ -67,13 +67,13 @@ SpringMVC正是希望这三者之间进行解耦，实现各干各的，更加�
 
 ```xml
 <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>com.example.config.MvcConfiguration</param-value>
-        </init-param>
-        <init-param>
-            <param-name>contextClass</param-name>
-            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
-        </init-param>
+  <param-name>contextConfigLocation</param-name>
+  <param-value>com.example.config.MvcConfiguration</param-value>
+</init-param>
+<init-param>
+  <param-name>contextClass</param-name>
+ <paramvalue>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+</init-param>
 ```
 
 如果还是想使用XML配置文件进行配置，那么可以直接这样写：
@@ -85,7 +85,7 @@ SpringMVC正是希望这三者之间进行解耦，实现各干各的，更加�
 </init-param>
 ```
 
-如果你希望完完全全丢弃配置文件，可以直接添加一个类，Tomcat会在类路径中查找实现ServletContainerInitializer 接口的类，如果发现的话，就用它来配置Servlet容器，Spring提供了这个接口的实现类 SpringServletContainerInitializer , 通过@HandlesTypes(WebApplicationInitializer.class)设置，这个类反过来会查找实现WebApplicationInitializer 的类，并将配置的任务交给他们来完成，因此直接实现接口即可：
+如果你希望完完全全丢弃配置文件，可以直接添加一个类，Tomcat会在类路径中查找实现`ServletContainerInitializer` 接口的类，如果发现的话，就用它来配置Servlet容器，Spring提供了这个接口的实现类 `SpringServletContainerInitializer` , 通过@HandlesTypes(WebApplicationInitializer.class)设置，这个类反过来会查找实现WebApplicationInitializer 的类，并将配置的任务交给他们来完成，因此直接实现接口即可：
 
 ```java
 public class MainInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -105,6 +105,8 @@ public class MainInitializer extends AbstractAnnotationConfigDispatcherServletIn
     }
 }
 ```
+
+`MainInitializer`可以随便命名，只要继承AbstractAnnotationConfigDispatcherServletInitializer即可，这是mvc的初始化类，所有的配置类都要从这里开始配置，主要包含`getRootConfigClasses`和`getServletConfigClasses`，两个都是Spring的配置容器，getRootConfigClasses主要用来配置业务层的bean，getServletConfigClasses主要是针对mapping请求，controller相关，而`getServletMappings`是指将所有的请求交给Spring的DispatcherServlet来处理，而不是之前的jdk的servlet处理。
 
 顺便编写一下最基本的配置类：
 
