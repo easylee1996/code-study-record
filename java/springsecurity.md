@@ -1189,16 +1189,11 @@ SecurityContextPersistenceFilter也是内置的Filter，可以尝试阅读一下
 
 当过滤器链执行到SecurityContextPersistenceFilter时，它会从HttpSession中把SecurityContext对象取出来（是存在Session中的，跟随会话的消失而消失），然后放入SecurityContextHolder对象中。请求结束后，再把SecurityContext存入HttpSession中，并清除SecurityContextHolder内的SecurityContext对象。
 
-# 项目实战完善功能
+# 相关扩展
 
-在了解了SpringSecurity的大部分功能后，我们就来将整个网站的内容进行完善，登陆目前已经实现了，我们还需要实现以下功能：
+## Thymeleaf扩展
 
-* 注册功能（仅针对于学生）
-* 角色分为同学和管理员
-  * 管理员负责上架、删除、更新书籍，查看所有同学的借阅列表
-  * 同学可以借阅和归还书籍，以及查看自己的借阅列表
-
-开始之前我们需要先配置一下Thymeleaf的SpringSecurity扩展，它针对SpringSecurity提供了更多额外的解析：
+开始之前我们需要先配置一下Thymeleaf的SpringSecurity扩展，它针对SpringSecurity提供了更多额外的解析，用于在页面中判断用户的角色和权限：
 
 ```xml
 <dependency>
@@ -1208,13 +1203,15 @@ SecurityContextPersistenceFilter也是内置的Filter，可以尝试阅读一下
 </dependency>
 ```
 
+MvcConfiguration文件中配置：
+
 ```java
 //配置模板引擎Bean
 @Bean
 public SpringTemplateEngine springTemplateEngine(@Autowired ITemplateResolver resolver){
     SpringTemplateEngine engine = new SpringTemplateEngine();
     engine.setTemplateResolver(resolver);
-    engine.addDialect(new SpringSecurityDialect());   //添加针对于SpringSecurity的方言
+    engine.addDialect(new SpringSecurityDialect());   //添加针对于SpringSecurity的支持
     return engine;
 }
 ```
@@ -1223,5 +1220,3 @@ public SpringTemplateEngine springTemplateEngine(@Autowired ITemplateResolver re
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 ```
-
-下一章就是最后一章了，我们会深入讲解MySQL的高级部分，包括函数、存储过程、锁机制、索引以及存储引擎。
