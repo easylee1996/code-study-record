@@ -156,7 +156,11 @@ Maven也需要安装环境，但是IDEA已经自带了Maven环境，因此我们
 
 ### 配置阿里云镜像
 
-在conf/setting.xml中，mirrors标签替换阿里云
+要在项目目录列表配置idea的maven相关配置，才可以所有项目都生效，如果还是不行，就只能在项目内部再自己选择一下本地下载的maven目录，和本地的这个配置文件
+
+![image-20220513002140262](assets/java工具/image-20220513002140262.png)
+
+在maven文件目录中配置核心配置文件conf/setting.xml，mirrors标签替换阿里云
 
 ```xml
 <mirror> 
@@ -166,6 +170,29 @@ Maven也需要安装环境，但是IDEA已经自带了Maven环境，因此我们
   <url>http://maven.aliyun.com/nexus/content/groups/public</url>
 </mirror>
 ```
+
+同时也可以在具体的项目pom文件中，单独配置阿里云仓库
+
+```xml
+<repositories>
+    <repository>
+        <id>maven-ali</id>
+        <url>https://maven.aliyun.com/repository/public</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
+        </snapshots>
+    </repository>
+</repositories>
+```
+
+要注意上面的地址要根据jar包所在的具体位置，选择具体的地址，地址列表在这里查看：[仓库服务 (aliyun.com)](https://developer.aliyun.com/mvn/view)
+
+网速够快，最好还是直接使用原生的maven，就别搞什么镜像了
 
 ### 本地仓库
 
