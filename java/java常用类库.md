@@ -492,3 +492,112 @@ java.util.logging.ConsoleHandler.formatter = com.test.TestFormatter
 
 现在就好看多了，当然，我们还可以继续为Mybatis添加文件日志，这里就不做演示了。
 
+# Kaptcha验证码
+
+Kaptcha是谷歌开发的一个验证码集成库
+
+加载依赖
+
+```xml
+<!--Kaptcha验证码依赖-->
+<dependency>
+    <groupId>com.github.penggle</groupId>
+    <artifactId>kaptcha</artifactId>
+    <version>2.3.2</version>
+</dependency>
+```
+
+在`applicationContext.xml`配置Kaptcha
+
+```xml
+<!--配置Kaptcha验证码-->
+<bean id="KaptchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+    <property name="config">
+        <bean class="com.google.code.kaptcha.util.Config">
+            <constructor-arg>
+                <props>
+                    <!--验证码图片不生成边框-->
+                    <prop key="kaptcha.border">no</prop>
+                    <!--验证码图片的宽度-->
+                    <prop key="kaptcha.image.width">120</prop>
+                    <!--验证码图片字体颜色-->
+                    <prop key="kaptcha.textproducer.font.color">blue</prop>
+                    <!--每个字符占用最大像素-->
+                    <prop key="kaptcha.textproducer.font.size">40</prop>
+                    <!--验证码包含几个元素-->
+                    <prop key="kaptcha.textproducer.char.length">4</prop>
+                </props>
+            </constructor-arg>
+        </bean>
+    </property>
+</bean>
+```
+
+然后在Controller中创建验证码图片
+
+```java
+@Controller
+public class KaptchaController {
+    @Resource
+    private Producer kaptchaProducer;
+
+    @GetMapping("/veryfy_code")
+    public void createVerifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 响应立即过期
+        response.setDateHeader("Expires", 0);
+        // 不缓存任何图片数据
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+        response.addHeader("Cache-Control", "post-check=0, pre-check=0");
+        response.setHeader("Pragma", "no-cache");
+        // 设置响应类型为图片
+        response.setContentType("image/png");
+        // 生成验证码字符文本
+        String verifyCode = kaptchaProducer.createText();
+        request.getSession().setAttribute("kaptchaVerifyCode",verifyCode);
+        // 利用生成的字符文本生成图片
+        BufferedImage image = kaptchaProducer.createImage(verifyCode);
+        ServletOutputStream out = response.getOutputStream();
+        ImageIO.write(image, "png", out);
+        // 强制刷新缓冲区，先刷新再关闭流，否则还会有一点点图片数据留在缓冲区
+        out.flush();
+        out.close();
+    }
+}
+```
+
+# commons-codec加密解密组件
+
+导入依赖
+
+```xml
+<!--加密/解密组件-->
+<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.14</version>
+</dependency>
+```
+
+使用
+
+```java
+import org.apache.commons.codec.digest.DigestUtils;
+
+public class MD5Utils {
+    public static String md5Digest(String source , Integer salt){
+        // 转为字符数组
+        char[] ca = source.toCharArray();
+        //混淆源数据
+        for(int i = 0 ; i < ca.length ; i++){
+            ca[i] = (char) (ca[i] + salt);
+        }
+        // 转为字符串
+        String target = new String(ca);
+        // 加密
+        String md5 = DigestUtils.md5Hex(target);
+        return md5;
+    }
+}
+```
+
+其中`DigestUtils.md5Hex(target)`就是使用的commons-codec组件加密的

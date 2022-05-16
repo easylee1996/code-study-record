@@ -976,7 +976,67 @@ public class TestConfiguration {
 
 到这里，关于Spring框架的大致内容就聊得差不多了，其余的内容，我们会在后面继续讲解。
 
-# 深入Mybatis框架
+# Spring Task任务调度
+
+Spring Task是Spring 3.0后推出的定时任务模块，按周期后台自动执行任务，可以利用Cron表达式灵活的实现定期处理，同时Spring Task默认在Spring核心库中，不需要导入依赖
+
+## Cron表达式
+
+Cron表达式专用于表示定时时间的管理，在多个框架中比较常用。
+
+| 秒   | 分   | 小时 | 日   | 月   | 星期几 | 年   |
+| ---- | ---- | ---- | ---- | ---- | ------ | ---- |
+| 0    | *    | *    | *    | *    | ？     |      |
+| 0,30 | 0-5  | *    | *    | *    | ？     | 2000 |
+| 0    | 0    | 9-18 | ?    | *    | WED    |      |
+
+Cron表达式由7位组成，第一位到第七位，分别为秒、分、小时、日、月、星期几、年
+
+- `*`号表示任意，如在分位填写*，表示每分钟
+- `?`号表示互斥，设置了日月，必然无法设置星期几，两个是互斥的
+- `0,30`表示0秒和第30秒执行
+- `0-5`表示前5分钟
+
+则第一行的意思为每分钟执行一次
+
+第二行为每小时前5分钟0秒和30秒都执行一次
+
+第三行为每周三9-18点整点执行
+
+### 设置定时任务
+
+比如创建一个操作数据库的mapper
+
+首先需要在applicationContext.xml中开启Spring Task定时任务的注解模式
+
+```xml
+<task:annotation-driven/>
+```
+
+注意，开启这个必须在头文件中加入task的xmlns的头链接
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task.xsd">
+```
+
+当然其它的xmlns默认也要导入，这里只写了需要特别加入的xmlns
+
+使用任务调度非常简单，在需要的方法上添加即可
+
+```java
+@Scheduled(cron = "0 * * * * ?")	// 每分钟执行
+public void updateDemo() {
+	xxxx
+}
+```
+
+
+
+# 整合Mybatis框架
 
 学习了Spring之后，我们已经了解如何将一个类作为Bean交由IoC容器管理，也就是说，现在我们可以通过更方便的方式来使用Mybatis框架，我们可以直接把SqlSessionFactory、Mapper交给Spring进行管理，并且可以通过注入的方式快速地使用它们，因此，我们要学习一下如何将Mybatis与Spring进行整合。
 

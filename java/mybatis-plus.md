@@ -63,13 +63,16 @@ MyBatis-Plus是一个Mybatis的增强工具，自动实现Mapper CRUD操作，�
 ```java
 @TableName("test")
 public class Test {
-    @TableId("id")
+    @TableId(type = IdType.AUTO)	// 表名id是主键，是自增主键
     @TableField("id")
     private int id;
+  
     @TableField("content")
     private String content;
 }
 ```
+
+要注意如果字段名复合使用_连接，同时属性名复合驼峰命名，或者两者相同，则可以不写@TableField，会自动对应
 
 ### 创建Mapper接口继承BaseMapper，并创建对应Mapper XMl
 
@@ -81,7 +84,7 @@ public interface TestMapper extends BaseMapper<Test> {
 }
 ```
 
-可以注意到使用MP就不需要配置Mapper Xml了，但是如果要使用自己的方法时，还是需要创建
+可以注意到使用MP就不需要配置Mapper Xml了，但是这个对应的xml文件是必须配置的，除非使用注解模式
 
 创建一个测试类
 
