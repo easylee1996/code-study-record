@@ -1003,7 +1003,7 @@ Cron表达式由7位组成，第一位到第七位，分别为秒、分、小时
 
 第三行为每周三9-18点整点执行
 
-### 设置定时任务
+## 定时任务
 
 比如创建一个操作数据库的mapper
 
@@ -1025,6 +1025,19 @@ Cron表达式由7位组成，第一位到第七位，分别为秒、分、小时
 
 当然其它的xmlns默认也要导入，这里只写了需要特别加入的xmlns
 
+当然也可以使用注解模式开启异步任务，可以在配置类上添加`@EnableScheduling`或是在SpringBoot的启动类`SpringBootWebTestApplication`上添加：
+
+```java
+@EnableAsync
+@EnableScheduling
+@SpringBootApplication
+public class SpringBootWebTestApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootWebTestApplication.class, args);
+    }
+}
+```
+
 使用任务调度非常简单，在需要的方法上添加即可
 
 ```java
@@ -1032,9 +1045,179 @@ Cron表达式由7位组成，第一位到第七位，分别为秒、分、小时
 public void updateDemo() {
 	xxxx
 }
+
+@Scheduled(fixedDelay = 2000)	// 2000毫秒后执行
+public void updateDemo() {
+	xxxx
+}
 ```
 
+任务调度`@Scheduled`，需要指定'`cron`', '`fixedDelay`', or '`fixedRate`'的其中一个，否则无法创建定时任务，他们的区别如下：
 
+* fixedDelay：在上一次定时任务执行完之后，间隔多久继续执行。
+* fixedRate：无论上一次定时任务有没有执行完成，两次任务之间的时间间隔。
+* cron：使用cron表达式来指定任务计划。
+
+## 异步任务
+
+需要使用Spring异步任务支持，我们需要在配置类上添加`@EnableAsync`或是在SpringBoot的启动类上添加也可以。
+
+```java
+@EnableAsync
+@SpringBootApplication
+public class SpringBootWebTestApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootWebTestApplication.class, args);
+    }
+}
+```
+
+接着我们只需要在需要异步执行的方法上，添加`@Async`注解即可将此方法标记为异步，当此方法被调用时，会异步执行，也就是新开一个线程执行，不是在当前线程执行。
+
+```java
+@Service
+public class TestService {
+
+    @Async
+    public void test(){
+        try {
+            Thread.sleep(3000);
+            System.out.println("我是异步任务！");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+```java
+@RequestMapping("/login")
+public String login(HttpServletRequest request){
+    service.test();
+    System.out.println("我是同步任务！");
+    return "login";
+}
+```
+
+实际上这也是得益于AOP机制，通过线程池实现，但是也要注意，正是因为它是AOP机制的产物，所以它只能是在Bean中才会生效！
+
+使用`@Async`注解的方法可以返回 'void' 或 "Future" 类型，Future是一种用于接收任务执行结果的一种类型，我们会在Java并发编程中进行讲解，这里暂时不做介绍。
+
+# 监听器
+
+监听器对我们来说也是一个比较陌生的概念，那么何谓监听呢？
+
+监听实际上就是等待某个事件的触发，当事件触发时，对应事件的监听器就会被通知。
+
+```java
+@Component
+// 监听ContextRefreshedEvent事件
+public class TestListener implements ApplicationListener<ContextRefreshedEvent> {
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        System.out.println(event.getApplicationContext());
+    }
+}
+```
+
+通过监听事件，我们就可以在对应的时机进行一些额外的处理，我们可以通过断点调试来查看一个事件是如何发生，以及如何通知监听器的。
+
+通过阅读源码，我们得知，一个事件实际上就是通过`publishEvent`方法来进行发布的，我们也可以自定义我们自己项目中的事件，并注册对应的监听器进行处理。
+
+```java
+# 定义一个事件
+public class TestEvent extends ApplicationEvent {   //需要继承ApplicationEvent
+    public TestEvent(Object source) {
+        // 要调用父类方法
+        super(source);
+    }
+}
+```
+
+```java
+@Component
+// 使用这个事件
+public class TestListener implements ApplicationListener<TestEvent> {
+
+    @Override
+    public void onApplicationEvent(TestEvent event) {
+        System.out.println("自定义事件发生了："+event.getSource());
+    }
+}
+```
+
+```java
+@Resource
+ApplicationContext context;
+
+@RequestMapping("/login")
+public String login(HttpServletRequest request){
+    // 当我们去发布这个事件的时候，就会调用监听器
+    context.publishEvent(new TestEvent("有人访问了登录界面！"));
+    return "login";
+}
+```
+
+# Aware系列接口
+
+我们在之前讲解Spring源码时，经常会发现某些类的定义上，除了我们当时讲解的继承关系以外，还实现了一些接口，他们的名称基本都是`xxxxAware`，比如我们在讲解SpringSecurity的源码中，AbstractAuthenticationProcessingFilter类就是这样：
+
+```java
+public abstract class AbstractAuthenticationProcessingFilter extends GenericFilterBean implements ApplicationEventPublisherAware, MessageSourceAware {
+    protected ApplicationEventPublisher eventPublisher;
+    protected AuthenticationDetailsSource<HttpServletRequest, ?> authenticationDetailsSource = new WebAuthenticationDetailsSource();
+    private AuthenticationManager authenticationManager;
+    ...
+```
+
+我们发现它除了继承自GenericFilterBean之外，还实现了ApplicationEventPublisherAware和MessageSourceAware接口，那么这些Aware接口到底是干嘛的呢？
+
+Aware的中文意思为**感知**。简单来说，他就是一个标识，实现此接口的类会获得某些感知能力，Spring容器会在Bean被加载时，根据类实现的感知接口，会调用类中实现的对应感知方法。
+
+**也就是说这个类实现了感知接口的哪些方法，那么这个类加载进bean时，就会自动调用这些感知方法，不用调用，是自动调用的，自动执行。**
+
+比如AbstractAuthenticationProcessingFilter就实现了ApplicationEventPublisherAware接口，此接口的感知功能为事件发布器，在Bean加载时，会调用实现类中的`setApplicationEventPublisher`方法，而AbstractAuthenticationProcessingFilter类则利用此方法，在Bean加载阶段获得了容器的事件发布器，以便之后发布事件使用。
+
+```java
+public void setApplicationEventPublisher(ApplicationEventPublisher eventPublisher) {
+    this.eventPublisher = eventPublisher;   //直接存到成员变量
+}
+```
+
+```java
+protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    SecurityContext context = SecurityContextHolder.createEmptyContext();
+    context.setAuthentication(authResult);
+    SecurityContextHolder.setContext(context);
+    if (this.logger.isDebugEnabled()) {
+        this.logger.debug(LogMessage.format("Set SecurityContextHolder to %s", authResult));
+    }
+
+    this.rememberMeServices.loginSuccess(request, response, authResult);
+  	//在这里使用
+    if (this.eventPublisher != null) {
+        this.eventPublisher.publishEvent(new InteractiveAuthenticationSuccessEvent(authResult, this.getClass()));
+    }
+
+    this.successHandler.onAuthenticationSuccess(request, response, authResult);
+}
+```
+
+同样的，除了ApplicationEventPublisherAware接口外，我们再来演示一个接口，比如：
+
+```java
+@Service
+public class TestService implements BeanNameAware {
+    @Override
+    public void setBeanName(String s) {
+        System.out.println(s);
+    }
+}
+```
+
+`BeanNameAware`就是感知Bean名称的一个接口，当Bean被加载时，会调用`setBeanName`方法并将Bean名称作为参数传递。
+
+有关所有的Aware这里就不一一列举了。
 
 # 整合Mybatis框架
 
