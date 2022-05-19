@@ -1,4 +1,4 @@
-![image-20220519182742815](data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1326 732"></svg>)
+![image-20220519210136463](assets/jpa/image-20220519210136463.png)
 
 # 认识SpringDataJPA
 
