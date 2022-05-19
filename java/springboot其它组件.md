@@ -73,7 +73,7 @@ class SpringBootTestApplicationTests {
       	//设置邮件发送给谁，可以多个，这里就发给你的QQ邮箱
         message.setTo("你的QQ号@qq.com");
       	//邮件发送者，这里要与配置文件中的保持一致
-        message.setFrom("javastudy111@163.com");
+        message.setFrom("xxx@163.com");
       	//OK，万事俱备只欠发送
         sender.send(message);
     }
@@ -93,7 +93,7 @@ void contextLoads() throws MessagingException {
     helper.setSubject("Test");
     helper.setText("lbwnb");
     helper.setTo("你的QQ号@qq.com");
-    helper.setFrom("javastudy111@163.com");
+    helper.setFrom("xxx@163.com");
   	//发送修改好的MimeMessage
     sender.send(message);
 }
@@ -116,8 +116,6 @@ void contextLoads() throws MessagingException {
 ![image-20220519182936017](assets/springboot其它组件/image-20220519182936017.png)
 
 * **分离：**后端仅返回前端所需的数据，不再渲染HTML页面，不再控制前端的效果。至于前端用户看到什么效果，从后端请求的数据如何加载到前端中，都由前端通过JS等进行动态数据填充和渲染。这样后端只返回JSON数据，前端处理JSON数据并展示，这样前后端的职责就非常明确了。
-
-![image-20220519182942512](data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2038 1304"></svg>)
 
 实现前后端分离有两种方案，一种是直接放入SpringBoot的资源文件夹下，但是这样实际上还是在依靠SpringBoot内嵌的Tomcat服务器进行页面和静态资源的发送，我们现在就是这种方案。
 
