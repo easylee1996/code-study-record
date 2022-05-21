@@ -1286,9 +1286,9 @@ public static void main(String[] args) {
 - `LinkedBlockingQueue`:无界队列，无上限，一直可以存入任务
 - `ArrayBlockingQueue`：有界队列
 
-### java自带常见线程池
+## java自带常见线程池
 
-#### newFixedThreadPool
+### newFixedThreadPool
 
 使用`LinkedBlockingQueue`无界队列，超过核心线程池直接放入队列中，不会再创建新线程，容易造成大量内存占用，可能会导致OOM(内存耗尽)
 
@@ -1316,7 +1316,7 @@ class Task implements Runnable {
 }
 ```
 
-#### newSingleThreadExecutor
+### newSingleThreadExecutor
 
 使用`LinkedBlockingQueue`无界队列，永远都只有一个线程，单线程，全部加入队列中，当请求堆积的时候，可能会占用大量的内存
 
@@ -1343,7 +1343,7 @@ class Task implements Runnable {
 }
 ```
 
-#### newCachedThreadPool
+### newCachedThreadPool
 
 可缓存线程池，可以自动回收多余线程
 
@@ -1372,7 +1372,7 @@ class Task implements Runnable {
 }
 ```
 
-#### ScheduledThreadPool
+### ScheduledThreadPool
 
 使用`DelayedWorkQueue`延迟队列，延迟一定时间才开始将任务加入线程池，支持定时及周期性任务执行的线程池
 
@@ -1399,11 +1399,11 @@ class Task implements Runnable {
     }
 ```
 
-#### workStealingPool
+### workStealingPool
 
 当任务产生子任务时，使用这种线程池比较合适，比如树的相关问题，左右两边又要分左右，也就是有子任务，这种使用`workStealingPool`是比较合适的，暂时不研究
 
-#### 创建线程池
+### 创建线程池
 
 线程池最好是自己手动创建，明确线程池类型，工作队列类型，核心线程数，最大线程数等配置，创建最符合当前业务要求的线程池。
 
@@ -1415,6 +1415,39 @@ class Task implements Runnable {
 上面的规则适合一般的线程池业务，最严谨的是做压力测试测出来，也可以按照下面的公式简单计算。
 
 > 线程数 = CPU核心数 * (1 + 平均等待时间 / 平均工作时间)
+
+## 线程池常用方法
+
+### shutdown
+
+停止线程池，但是不是立即停止，而是将线程池中存在的任务和队列中存在任务执行完成之后再停止，同时不在接收新任务。
+
+```java
+public class PoolTest {
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        for (int i = 0; i < 1000; i++) {
+            executorService.execute(new Task());
+        }
+        // 两秒后停止线程池
+        Thread.sleep(2000);
+        executorService.shutdown();
+        System.out.println("shutdown"); // 可以发现其实已经加入了非常多的任务到队列中
+    }
+}
+
+class Task implements Runnable {
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread().getName());
+    }
+}
+```
 
 ## 自定义一个线程池
 
