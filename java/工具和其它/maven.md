@@ -1,144 +1,3 @@
-# tomcat web服务器
-
-## 安装tomcat
-
-tomcat官网：http://tomcat.apache.org/
-
-![image-20220425214348889](assets/java工具、常用类库/image-20220425214348889.png)
-
-## 启动tomcat服务器
-
-下载之后直接解压即可
-
-![image-20220425214425956](assets/java工具、常用类库/image-20220425214425956.png)
-
-bin目录下启动tomcat
-
-![image-20220425214451778](assets/java工具、常用类库/image-20220425214451778.png)
-
-如果显示找不到startup.sh
-
-那么执行以下命令启动
-
-其实执行startup.bat或者startup.sh也是执行下面这个
-
-```shell
-sh catalina.sh run 
-```
-
-
-
-访问测试：http://localhost:8080/
-
-## tomcat配置
-
-conf目录下，server.xml是服务器核心配置文件
-
-可以配置启动的端口号
-
-- tomcat的默认端口号为：8080 
-
-- mysql：3306 
-
-- http：80
-
-- https：443
-
-```xml
-<Connector port="8081" protocol="HTTP/1.1" connectionTimeout="20000" redirectPort="8443" />
-```
-
-
-
-可以配置主机的名称
-
-默认的主机名为：localhost->127.0.0.1 
-
-默认网站应用存放的位置为：webapps，指的是所有网站都必须放在这个里面才能找得到，而不是直接在webapps放具体项目文件，里面还可以新建项目目录
-
-```xml
-<Host name="www.qinjiang.com" appBase="webapps" unpackWARs="true" autoDeploy="true">
-```
-
-
-
-## 高难度面试题
-
-请你谈谈网站是如何进行访问的！
-
-1. 输入一个域名,回车
-2. 检查本机的 C:\Windows\System32\drivers\etc\hosts配置文件下有没有这个域名映射
-1. 有：直接返回对应的ip地址，这个地址中，有我们需要访问的web程序，可以直接访问
-1. 没有：去DNS服务器找，找到的话就返回，找不到就返回找不到；
-
-```xml
-127.0.0.1 www.qinjiang.com
-```
-
-
-
-## tomcat网站项目基本结构
-
-![image-20220425220200742](assets/java工具、常用类库/image-20220425220200742.png)
-
-
-
-## tomcat idea配置
-
-![image-20220426204012405](assets/java工具、常用类库/image-20220426204012405.png)
-
-注意上面的两个热更新需要配置deployment之后才会出现	![image-20220426204119333](assets/java工具、常用类库/image-20220426204119333.png)
-
-
-
-## 热更新配置
-
-级别update classes and resources最低，restart最高
-
-on update action：代码改变时
-
-On frame deactivation：窗口失去焦点时
-
-- update classes and resources：改了html,css,js
-- redeploy：改了后台Java代码
-- restart：改了服务器配置
-
-# mac环境变量配置
-
-只是配置命令行的环境变量，也就是在命令行中能识别环境变量
-
-${PATH}后面的:是分隔两个path的,前面的变量表示加上前面的path
-
-`zsh命令行`
-
-```shell
-// 打开配置文件
-open ~/.zshrc
-
-// 加入mysql命令
-export PATH=${PATH}:/usr/local/mysql/bin
-
-// 更新配置文件
-source ~/.zshrc
-```
-
-
-
-`默认控制台配置`
-
-```shell
-// 打开配置文件
-open ~/.bash_profile
-
-// 加入mysql命令
-export PATH=${PATH}:/usr/local/mysql/bin
-
-// 更新配置文件
-source ~/.bash_profile
-```
-
-
-
 # maven构建工具
 
 Maven 翻译为"专家"、"内行"，是 Apache 下的一个纯 Java 开发的开源项目。基于项目对象模型（缩写：POM）概念，Maven利用一个中央信息片断能管理一个项目的构建、报告和文档等步骤。Maven 是一个项目管理工具，可以对 Java 项目进行构建、依赖管理。Maven 也可被用于构建和管理各种项目，例如 C#，Ruby，Scala 和其他语言编写的项目。Maven 曾是 Jakarta 项目的子项目，现为由 Apache 软件基金会主持的独立 Apache 项目。
@@ -158,7 +17,7 @@ Maven也需要安装环境，但是IDEA已经自带了Maven环境，因此我们
 
 要在项目目录列表配置idea的maven相关配置，才可以所有项目都生效，如果还是不行，就只能在项目内部再自己选择一下本地下载的maven目录，和本地的这个配置文件
 
-![image-20220513002140262](assets/java工具/image-20220513002140262.png)
+![image-20220513002140262](assets/maven/image-20220513002140262.png)
 
 在maven文件目录中配置核心配置文件conf/setting.xml，mirrors标签替换阿里云
 
@@ -210,13 +69,13 @@ lib下载在本地maven中的位置
 
 注意是在项目启动页面才是全局所有项目设置，如果在一个项目中设置只针对这一个项目
 
-![image-20220426204727304](assets/java工具、常用类库/image-20220426204727304.png)
+![image-20220426204727304](assets/maven/image-20220426204727304.png)
 
 #### 新项目配置
 
 新建项目之后，项目上右键添加支持
 
-![image-20220426193844506](assets/java工具、常用类库/image-20220426193844506.png)
+![image-20220426193844506](assets/maven/image-20220426193844506.png)
 
 
 
@@ -294,7 +153,7 @@ pom是maven的项目核心配置文件
 
 我们可以来看一下，一个Maven项目和我们普通的项目有什么区别：
 
-![image-20220508003606279](assets/java工具/image-20220508003606279.png)
+![image-20220508003606279](assets/maven/image-20220508003606279.png)
 
 那么首先，我们需要了解一下POM文件，它相当于是我们整个Maven项目的配置文件，它也是使用XML编写的：
 
@@ -372,7 +231,7 @@ public class Student {
 
 项目运行成功，表示成功导入了依赖。那么，Maven是如何进行依赖管理呢，以致于如此便捷的导入依赖，我们来看看Maven项目的依赖管理流程：
 
-![image-20220508003620804](assets/java工具/image-20220508003620804.png)
+![image-20220508003620804](assets/maven/image-20220508003620804.png)
 
 通过流程图我们得知，一个项目依赖一般是存储在中央仓库中，也有可能存储在一些其他的远程仓库（私服），几乎所有的依赖都被放到了中央仓库中，因此，Maven可以直接从中央仓库中下载大部分的依赖（Maven第一次导入依赖是需要联网的），远程仓库中下载之后 ，会暂时存储在本地仓库，我们会发现我们本地存在一个`.m2`文件夹，这就是Maven本地仓库文件夹，默认建立在C盘，如果你C盘空间不足，会出现问题！
 

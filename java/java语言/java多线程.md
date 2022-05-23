@@ -865,59 +865,206 @@ class Cat implements Runnable {
 locked = lock.tryLock(1,TimeUnit.SECONDS);
 ```
 
-### ThreadLocal的使用
+# ThreadLocal
 
-![image-20220520222507115](assets/java多线程/image-20220520222507115.png)
+hreadLocal类，主要用来创建工作内存中的变量(线程自己的变量，多个线程之间不共享，也就是不保存在共享的主内存中)，它将我们的变量值存储在内部（**只能存储一个变量**），不同的变量访问到ThreadLocal对象时，都只能获取到自己线程所属的变量。
 
-ThreadLocal类，主要用来创建工作内存中的变量(线程自己的变量)，它将我们的变量值存储在内部（**只能存储一个变量**），不同的变量访问到ThreadLocal对象时，都只能获取到自己线程所属的变量。
+## ThreadLocal两大应用场景
+
+### 每个线程需要一个独享的对象
+
+通常是工具类，典型的有`SimpleDateFormat`和`Random`类，也就是每个线程需要一个**独享**的工具类，如果多个线程同时使用一个工具类，会导致线程不安全，这个工具类返回的值很可能出错，简单来讲就是这个线程让工具类处理我这个线程的数据还没处理完另外一个线程又传入一个数据来处理，处理的可能是之前的线程数据然后返回给我。
+
+可以使用加锁的方式来解决线程安全问题，但是加锁会导致效率降低，因为加锁实际上在工具类的调用上效果和单线程效率一样。
+
+下面以`SimpleDateFormat`工具类来示例：
+
+首先当我们有两个线程需要使用这个工具类来返回具体的时间字符串时：
 
 ```java
-public class Test {
-    public static void main(String[] args) throws InterruptedException {
-        // 这里必须设置参数的泛型值，确定参数的类型
-        ThreadLocal<String> local = new ThreadLocal<>();
+public class ThreadLocal01 {
+    public static void main(String[] args) {
         new Thread(()->{
-            local.set("lbwnb");
-            System.out.println("线程独占变量值已经设定");
-            System.out.println(local.get());    // lbwnb
+            System.out.println(new ThreadLocal01().date(10));
         }).start();
-        Thread.sleep(1000);
         new Thread(()->{
-            System.out.println(local.get());    // null
+            System.out.println(new ThreadLocal01().date(20));
         }).start();
+    }
+    public String date (int seconds) {
+        Date date = new Date(1000 * seconds);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return dateFormat.format(date);
     }
 }
 ```
 
-可以发现第一个线程的变量，第二个线程无法获取，是线程独占的在工作内存中的变量。
-
-我们再来看看第一个线程存入后，第二个线程也存放，是否会覆盖第一个线程存放的内容：
+上面的代码仅仅是两个线程，问题不大，那么现在我们有30个线程需要使用SimpleDateFormat类呢，还是直接创建30个线程明显是不可取的，这时候需要使用到**线程池**了：
 
 ```java
-public static void main(String[] args) throws InterruptedException {
-    ThreadLocal<String> local = new ThreadLocal<>();  //注意这是一个泛型类，存储类型为我们要存放的变量类型
-    Thread t1 = new Thread(() -> {
-        local.set("lbwnb");   //将变量的值给予ThreadLocal
-        System.out.println("线程1变量值已设定！");
-        try {
-            Thread.sleep(2000);    //间隔2秒
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+public class ThreadLocal01 {
+    // 创建10个线程的固定线程池
+    public static ExecutorService threadPool = Executors.newFixedThreadPool(10);
+    public static void main(String[] args) {
+        for (int i = 0; i < 30; i++) {
+            int finalI = i;
+            threadPool.submit(()->{
+                System.out.println(new ThreadLocal01().date(finalI));
+            });
         }
-        System.out.println("线程1读取变量值：");
-        System.out.println(local.get());   //尝试获取ThreadLocal中存放的变量
-    });
-    Thread t2 = new Thread(() -> {
-        local.set("yyds");   //将变量的值给予ThreadLocal
-        System.out.println("线程2变量值已设定！");
-    });
-    t1.start();
-    Thread.sleep(1000);    //间隔1秒
-    t2.start();
+        threadPool.shutdown();
+    }
 }
 ```
 
-我们发现，即使线程2重新设定了值，也没有影响到线程1存放的值，所以说，不同线程向ThreadLocal存放数据，只会存放在线程自己的工作空间中，而不会直接存放到主内存中，因此各个线程直接存放的内容互不干扰。
+这时候新的问题又出现了，我们30个线程，创建了30次`SimpleDateFormat`对象，创建30个对象是极大的资源浪费，既然这个对象只是传值给它然后返回具体的时间字符串，做的工作都是一样的，为何不只创建一次，然后传不同的值呢：
+
+```java
+public class ThreadLocal01 {
+    // 创建10个线程的固定线程池
+    public static ExecutorService threadPool = Executors.newFixedThreadPool(10);
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    public static void main(String[] args) throws InterruptedException {
+        for (int i = 0; i < 30; i++) {
+            int finalI = i;
+            threadPool.submit(()->{
+                System.out.println(new ThreadLocal01().date(finalI));
+            });
+        }
+        threadPool.shutdown();
+    }
+}
+```
+
+上面使用了一个static对象来保证只创建一次，但是新的问题出现了，会发现输出时间时，有一些重复的，这是因为线程不安全，执行出错了，下面要进行下一步更改：
+
+要解决这个问题也非常简单，无非就是加一把锁就行了：
+
+```java
+public String date (int seconds) {
+    Date date = new Date(1000 * seconds);
+    // 将dateFormat对象锁住，同一时间只允许一个对象使用
+    // 当然dateFormat是ThreadLocal01的成员，锁住ThreadLocal01和锁住dateFormat是一样的
+    synchronized (ThreadLocal01.class) {
+       return dateFormat.format(date);
+    }
+}
+```
+
+但是这样会导致执行效率大大降低，看来这种场景最好的方案还是使用ThreadLocal：
+
+```java
+public class ThreadLocal01 {
+    // 创建10个线程的固定线程池
+    public static ExecutorService threadPool = Executors.newFixedThreadPool(10);
+    public static void main(String[] args) throws InterruptedException {
+        for (int i = 0; i < 1000; i++) {
+            int finalI = i;
+            threadPool.submit(()->{
+                System.out.println(new ThreadLocal01().date(finalI));
+            });
+        }
+        threadPool.shutdown();
+    }
+    public String date (int seconds) {
+        Date date = new Date(1000 * seconds);
+        return ThreadSafeFormatter.dateFormatThreadlocal.get().format(date);
+
+    }
+}
+class ThreadSafeFormatter {
+    // 每个线程创建一个独立的SimpleDateFormat，但是因为线程池只有10个线程
+    // 那么只会创建10个SimpleDateFormat
+    public static ThreadLocal<SimpleDateFormat> dateFormatThreadlocal =
+           ThreadLocal.withInitial(()->{
+               return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+           });
+}
+```
+
+### 每个线程内需要保存全局对象
+
+每个线程都有自己的全局对象，然后在多个service类中反复调用这个全局对象，如果使用传递的方式的话，那么调用每个service类的方式时，都要传递这个参数(函数式编程)，十分不方便，这种时候可以使用ThreadLocal的线程内全局对象，每个service类中的方法想使用的时候，直接调用这个即可。
+
+```java
+public class ThreadLocal02 {
+    public static void main(String[] args) {
+        new Service1().process();
+    }
+}
+// 这里创建了3个业务类，每个类中的process方法都要使用user信息
+// 当我们在第一个类中设置user信息到ThreadLocal中，后面就可以直接用
+class Service1 {
+    public void process() {
+        User user = new User("超哥");
+        UserContextHolder.holder.set(user);
+        // 这里就不需要传入这个user参数了，也可以传递user参数，通过ThreadLocal
+        new Service2().process();
+    }
+}
+class Service2 {
+    public void process() {
+        User user = UserContextHolder.holder.get();
+        System.out.println(user.name);
+        // 这里就不需要传入这个user参数了，也可以传递user参数，通过ThreadLocal
+        new Service3().process();
+    }
+}
+class Service3 {
+    public void process() {
+        User user = UserContextHolder.holder.get();
+        System.out.println(user.name);
+    }
+}
+class UserContextHolder {
+    public static ThreadLocal<User> holder = new ThreadLocal<>();
+}
+class User {
+    String name;
+    User(String name) {
+        this.name = name;
+    }
+}
+```
+
+可以发现使用了ThreadLocal之后，会将user信息保存在Thread线程中，只要在当前线程中，都可以使用这个共享变量，而且线程之间是隔离的，不会出现线程安全问题。
+
+## ThreadLocal带来的好处
+
+- 达到线程安全
+- 不需要加锁，提高执行效率
+- 更高效的利用内存、节省开销，不需要大量创建对象
+- 利用了ThreadLocal线程内全局变量共享的原理，免去了反复传参的繁琐，同时使得代码耦合度更低
+
+## ThreadLocal原理
+
+![image-20220522111526606](assets/java多线程/image-20220522111526606.png)
+
+实际上`ThreadLocal`是保存在`ThreadLocalMap`这个Map中的，然后ThreadLocalMap保存在Thread中，所以这些东西都是线程的成员，每个Thread都持有一个ThreadLocalMap成员变量。
+
+## ThreadLocal常用变量
+
+### initialValue
+
+设置ThreadLocal当前线程的初始值，只是一个**延迟加载**的方法，只有在调用`get`的时候，才会触发
+
+当线程第一次使用get方法访问变量时，将调用此方法，只有线程先前调用了`set`方法，不会为线程调用initialValue方法，也就是没有设置值就会调用设置初始值方法，如果没有设置初始值，则返回null
+
+通常每个方法最多只可以调用一次设置初始值，除非调用`remove`方法，则可以再次调用
+
+### set
+
+为这个线程设置一个新值
+
+### get
+
+得到这个线程对应的value，要注意get不需要参数，因为一个ThreadLocal只可以保存一个值，所以不需要传参
+
+### remove
+
+删除这个线程对应的值
+
+## ThreadLocal的继承
 
 我们发现在线程中创建的子线程，无法获得父线程工作内存中的变量：
 
@@ -950,6 +1097,51 @@ public static void main(String[] args) {
 ```
 
 在InheritableThreadLocal存放的内容，会自动向子线程传递。
+
+## ThreadLocal注意点
+
+### 内存泄露
+
+某个对象不再有用，但是占用的内存却不能被回收，也就是不能使用这个内存，这就导致了这个内存用不了了，当出现很多这样的内存，最终可能就会导致OOM内存泄露。
+
+引发内存泄露的原因：
+
+ThreadLocal的变量是保存在`Thread->ThreadLocalMap->key(entry)->value`中，也就是要使用value必须找到key(entry，这个key就是ThreadLocal对象名)，但是java中，这个key是弱引用，如果在线程池中一段时间不使用，会被GC垃圾回收掉，但是value是强引用，不会被回收，这样会导致key没了只剩下value，也就找不到这个value了，这个value就泄露了
+
+其实java在设计时已经考虑到这个问题，但我们调用set、remove、rehash等方法的时候，会自动扫描key为null的Entry，如果有就会把对应的value也设置为null，这样value可以会回收
+
+但是实际使用过程中可能我们一段时间不用线程池，也就不会去调用这些方法，那么也会内存泄露。
+
+所以根据阿里规约，我们在使用完ThreadLocal变量之后一定要调用`remove()`方法
+
+### 空指针异常
+
+```java
+public class ThreadLocalNull {
+    public static void main(String[] args) {
+        // 不set直接get取值
+        System.out.println(ThreadLocalNPE.get());
+    }
+}
+class ThreadLocalNPE {
+    // 泛型必须设置Long包装类型，不能设置long基本类型
+    public static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
+    static void set() {
+        threadLocal.set(Thread.currentThread().getId());
+    }
+    // 直接放回null，需要自动拆箱转为基本类型long就会报空指针异常
+    // 所以需要设置为static Long包装类型，才会返回正常的null
+    static long get() {
+        return threadLocal.get();
+    }
+}
+```
+
+这就是一个需要注意一下的问题
+
+### 共享对象
+
+如果ThreadLocal.set()的对象本来就是多个线程共享的对象，比如static对象，那么get()还是取的共享对象本身，还是有并发访问线程安全问题，这个理所当然。
 
 # java定时器
 
@@ -1449,6 +1641,78 @@ class Task implements Runnable {
 }
 ```
 
+使用`isShutdown`方法判断shutdown方法是否执行成功，不表示是否完成终止任务：
+
+```java
+System.out.println(executorService.isShutdown());
+```
+
+使用`executorService.isTerminated()`true表示线程池和队列中的任务都已经全部完成
+
+`awaitTermination`，表示等待一段时间，如果这段时间内执行完了则返回true，线程池和队列没执行完返回false
+
+```java
+System.out.println(executorService.awaitTermination(1,TimeUnit.SECONDS));
+```
+
+使用`shutdownNow`立即终端线程池，会将线程池里面的线程全部中断，然后将队列里面的线程返回，可以将这些保存起来，比如保存到日志，后期继续使用。
+
+```java
+public class PoolTest {
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        for (int i = 0; i < 1000; i++) {
+            executorService.execute(new Task());
+        }
+        // 两秒后停止线程池
+        Thread.sleep(2000);
+        List<Runnable> runnables = executorService.shutdownNow();
+    }
+}
+
+class Task implements Runnable {
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(500);
+            System.out.println(Thread.currentThread().getName());
+        } catch (InterruptedException e) {
+            System.out.println(Thread.currentThread().getName() + "被中断了");
+        }
+    }
+}
+```
+
+## 任务拒绝策略
+
+### 拒绝时机
+
+- 当Executor被shutdown关闭之后，再提交任务会被拒绝
+- 当达到最大线程且队列达到设计的workQueue容量时(比如`ArrayBlockingQueue`有界队列)
+
+### 拒绝策略
+
+- `AbortPolicy`：直接抛出异常
+- `DiscardPolicy`：直接丢弃这个任务
+- `DiscardOldestPolicy`：丢弃最老的任务
+- `CallerRunsPolicy`：调用者运行此任务，谁(哪个线程)提交的这个任务，谁来执行这个任务，这样做不会有业务损失，比如主线程提交的任务，当使用此策略之后，主线程用来执行这个任务了，也就不能继续提交其它任务了
+
+## 钩子方法
+
+后面再研究
+
+## 线程池的状态
+
+| 状态       | 含义                                                         |
+| ---------- | ------------------------------------------------------------ |
+| RUNNING    | 接受新任务并处理排队任务                                     |
+| SHUTDOWN   | 不接收新任务，但处理排队任务 `shutdown`                      |
+| STOP       | 不接收新任务，不处理排队任务，中断正在进行的任务 `shutdownnow` |
+| TIDYING    | 所有任务已经终止，workerCount为零时，线程会转换为此状态，会运行钩子方法 |
+| TERMINATED | 运行完成 `isTerminated=true`所有任务都已经完成               |
+
+
+
 ## 自定义一个线程池
 
 ### 设计原理
@@ -1633,6 +1897,4 @@ public class TestThread {
 }
 ```
 
-
-
-# 
+ 
