@@ -1,2 +1,2 @@
-# study
-easy learning
+# code-study-record
+code-study-record
