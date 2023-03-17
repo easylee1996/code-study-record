@@ -97,6 +97,7 @@
   - aa：包含，
   - daa：删除一个参数
   - cia：修改一个参数
+- 选中import参数：同上
 - vim-textobj-entire：`e`
   - ae：全屏所有文本
   - ie：所有文本不包括前后空格

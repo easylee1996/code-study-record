@@ -517,10 +517,25 @@ sneak默认按键是s，但s以前已经有相关的功能，所以需要进行�
   - aa：包含，
   - daa：删除一个参数
   - cia：修改一个参数
+- import参数处理：类似上面的参数处理，默认不支持import里面的参数的，添加下面的配置。
 - vim-textobj-entire：整体处理插件
   - ae：全屏所有文本
   - ie：所有文本不包括前后空格
 - 选择当前位置的这个单词：`gb`，多次按选择多个当前位置的单词，然后按大写的A，可以编辑多次选中的
+
+```json
+  // import参数处理 扩展ii、ia分隔符
+  "vim.argumentObjectOpeningDelimiters": [
+    "(",
+    "[",
+    "{"
+  ],
+  "vim.argumentObjectClosingDelimiters": [
+    ")",
+    "]",
+    "}"
+  ],
+```
 
 
 ### 可视模式
