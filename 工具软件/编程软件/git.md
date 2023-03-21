@@ -121,7 +121,7 @@ Git中的文件分为四个状态：
 
   ```shell
   # 创建公钥私钥
-  ssh-keygen -t rsa -C 2452241217@qq.com
+  ssh-keygen -t rsa -C xxx@qq.com
   # 获取公钥并复制
   cat id_rsa.pub
   # 保存位置：/Users/easylee/.ssh/id_rsa
@@ -174,7 +174,7 @@ Git中的文件分为四个状态：
 
 ### Https证书问题
 
-默认应该开始证书验证，以保证安全，如果是本地自建的仓库没有证书，必要时可以关闭
+默认应该开启证书验证，以保证安全，如果是本地自建的仓库没有证书，必要时可以关闭
 
 ```shell
 git config --global http.sslVerify false
@@ -186,11 +186,159 @@ git config --global http.sslVerify false
 
 使用官方的**Github Desktop**，则没有这个问题，推荐使用这个软件进行Github项目的传输，不用设置token也不用再多配置一步代理(前提是已经开了代理)。
 
+## git commit 提交信息规范
 
+### 标题
 
+提交标题应该简洁明了、动词开头、描述具体内容等。标题通常包含：类型、范围、描述三个部分，三个部分的使用方式如下：`fix(build): enforce LF line ending in built files`，下面具体看看三个部分：
 
+#### 1. 类型(type)
 
+下面几个类型是对功能代码进行修改：
 
+- `feat`：新增功能、特性、配置、选项、文档、测试用例等，新增内容均使用 `feat`，通常还应该注意，如果新功能比较大，应该拆分成小功能块，一块一块的提交，而不是整体提交。
+- `refactor`：用于代码重构，旨在改善代码的结构、设计，不影响代码的功能，提升可读性和维护性。
+- `perf`：用于代码性能优化的更改。例如：优化算法、提高代码的执行效率等。
+- `fix`：修复bug和缺陷。
 
+下面的几个类型，不会对功能代码产生影响，构建过程修改用 `build`，持续集成中的修改用 `ci`，而`chore`除了更新某个依赖库、添加构建脚本，还可以干 `style` 的活：
 
+- `chore`：翻译含义乏味的工作，比如变量名单词写错、多些一个符号、注释少写一段话、大意写错一些东西，总之这类的小修改都可以使用 `chore` 类型。
+- `ci`：用于持续集成系统的更改。例如：添加 Travis CI、修改 Jenkins 配置等。
+- `build`：用于构建过程中的更改。例如：更新构建工具、改变构建配置等。
+- `style`：用于对代码样式或者格式的更改，不影响代码的功能，但是不包括修改CSS，这是feat。例如：调整缩进、改变变量命名等。通常不使用style，在vue.js这些内容通常使用chore类型。
+- `docs`：用于对文档的更改。例如：更新 README.md 文件、添加 API 文档等。
+- `test`：用于修改测试用例的更改。例如：添加单元测试、修改端到端测试等。
 
+除此之外，还有一些其它的类型：
+
+- `revert`：用于回滚先前的提交。例如：撤销上一个提交、回到某个早期的版本等。
+- `WIP`：表示提交仍在进行中，尚未完成，不常用，不建议将未完成的代码进行提交，除非需要将代码提交给另外的团队成员进行查看。
+- `release`：表示发布一个新版本，包括版本号。
+
+#### 2. 范围(scope)
+
+范围用于提交本次修改影响的代码范围，非必填项，通常可以不写。
+
+#### 3. 描述(describe)
+
+描述内容必须符合下面的规则：
+
+- 简介明了
+- 动词短语：`add a new feature`、`fix a bug`
+- 详细描述：如果改动了很多重要内容或者存在潜在问题，应该在描述中进行一些简要描述。
+- 包含引用：如果是根据其他 issue、pr、bug等信息进行修改，则应该写上这些内容的链接。
+
+### 正文
+
+正文内容通常是可选的，如果本次提交内容较为复杂，则应该进行详细的解释，可以使用 `markdown`进行详细排版解释。
+
+但是一般大改动会涉及到版本变更，而版本变更不应该在一个commit信息中书写，而是应该写入到专门 `CHANGELOG.md`文档中进行详细的记录。
+
+### 脚注
+
+脚注信息通常用于提供一些额外的信息，比如参考文献，关联的issue、关闭的issue，关联的bug之类的。
+
+举例说明：
+
+```shell
+# 关闭issue，提交后会自动关闭对应issue
+feat: add new feature
+...
+Close #123
+
+# 关联issue
+fix: fix issue with component
+...
+Related to #456
+
+# 参考文档
+docs: update documentation
+...
+See https://vuejs.org/ for more information
+```
+
+## git commit提交自动化检测工具
+
+自动化检测工具可以生成类型之类的选项以供选择，同时可以检测正文标题是否符合规范。
+
+目前暂不使用，手动写即可，但是可以了解一下具体的用法。
+
+### commitlint
+
+commitlint 是一个 Git 提交信息规范校验工具，它可以帮助开发者自动化检测提交信息是否符合预设的规范。在项目中集成 commitlint 可以帮助开发团队保持提交信息的一致性和规范性，提高代码的可维护性和可读性。
+
+commitlint支持多种规范，常见的有Angular(vue也是使用这种规范)、Conventional Commits，两种规范基本一致，以Conventional Commits规范为例：
+
+```php
+<type>[optional scope]: <description>
+[optional body]
+[optional footer]
+```
+
+下面来配置 commitlint，首先安装一些必要的依赖，config-conventional是配置文件：
+
+```shell
+npm install --save-dev @commitlint/cli @commitlint/config-conventional
+```
+
+然后在项目中创建一个配置文件 `commitlint.config.js`：
+
+```js
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    // 在此处自定义规则
+  }
+};
+```
+
+自定义规则可以按照这样的格式：
+
+- type-enum：指定 commit 类型的枚举值。比如 feat、fix、docs、style 等。
+- subject-case：指定提交信息的主题部分的大小写格式。比如使用小写、大写、首字母大写等。
+- subject-max-length：指定提交信息的主题部分的最大长度。
+- body-max-line-length：指定提交信息的正文部分每行的最大长度。
+- footer-max-line-length：指定提交信息的注脚部分每行的最大长度。
+
+举例说明：
+
+```json
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  // level：0关闭规则 1警告 2表示报错并阻止提交，下面三个规则中的2表示错误时阻止提交
+  rules: {
+    'type-enum': [
+      2,
+      'always',	// 始终应用
+      ['feat', 'fix', 'docs', 'style', 'refactor', 'test', 'chore', 'revert'],
+    ],
+    'subject-case': [2, 'always', 'sentence-case'],
+    'body-max-line-length': [2, 'always', 72],
+  },
+};
+```
+
+这样`commitlint`就安装配置完成了，但是这样只是定义好了规范，但是我们使用Git工具提交时并不会使用这些规范，接下来来看一下Git钩子管理工具`husky`
+
+### husky
+
+husky是一个Git钩子管理工具，会在执行各种Git命令时，自动调用对应的钩子函数，执行对应的逻辑，下面来安装配置一下。首先安装husky：
+
+```shell
+npm install husky --save-dev
+```
+
+然后在 `package.json`中添加配置：
+
+```json
+{
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS" // 调用commitlint并传递HUSKY_GIT_PARAMS参数
+    }
+  }
+}
+```
+
+配置完成后，执行 `git add .`、`git commit`就会自动调用上面的钩子函数，然后钩子函数自动调用`commitlint`来检查git commit提交规范。
