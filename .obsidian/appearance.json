@@ -1,0 +1,17 @@
+{
+  "accentColor": "#a697d3",
+  "theme": "system",
+  "cssTheme": "Blue Topaz",
+  "interfaceFontFamily": "",
+  "textFontFamily": "",
+  "monospaceFontFamily": "",
+  "baseFontSize": 24,
+  "nativeMenus": false,
+  "enabledCssSnippets": [
+    "hideAssets",
+    "checklist插件",
+    "imageLeft"
+  ],
+  "baseFontSizeAction": true,
+  "translucency": false
+}

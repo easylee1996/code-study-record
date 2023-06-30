@@ -1,0 +1,12 @@
+{
+  "promptDelete": false,
+  "vimMode": true,
+  "attachmentFolderPath": "./assets",
+  "userIgnoreFilters": null,
+  "showUnsupportedFiles": false,
+  "newFileLocation": "current",
+  "alwaysUpdateLinks": true,
+  "spellcheck": false,
+  "readableLineLength": true,
+  "tabSize": 4
+}

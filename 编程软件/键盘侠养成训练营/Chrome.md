@@ -1,3 +1,5 @@
+# VimiumC
+
 ## 初识 VimiumC
 
 VimiumC是vimium的扩展版本，基于vimium，功能更加强大。
@@ -90,6 +92,7 @@ cmd + p搜索文件、cmd + shift + p搜索命令
   - 打开后显示控制台面板：`cmd + option + j`
   - 打开后显示元素面板：`cmd + option + c`
 - 切换面板：`cmd + []`
+- 切换到指定面板：`cmd + 1-9`，需要在设置中打开：启用1-9快捷键切换面板
 - 打开隐藏抽屉栏：`cmd + .`，通常这个命令可以直接代表打开下面的控制台了
 - 使用抽屉面板打开控制台：未设置快捷键，由上面的快捷键代替
   - 清空控制台：`cmd + k`，有延迟，因为`cmd + k cmd + s`
@@ -111,3 +114,11 @@ cmd + p搜索文件、cmd + shift + p搜索命令
 - 跳转到指定行：`ctrl + g`
 
 > 这里的快捷键，建议配置和vscode尽量一致，设置两者都合适的快捷键。
+
+# 《你不知道的 Chrome 调试技巧》- 掘金小册
+
+## 通用篇
+
+### 调整CSS颜色值
+
+<img src="assets/Chrome/snippet-increase-decrease-081df4a1f0cf3c8fe9bdc391bf8fa225.png" alt="img" style="zoom:25%;" />

@@ -1,0 +1,5 @@
+img:not([class*='emoji']) {
+  float: left;
+  border-radius: 10px;
+  margin: 20px 0 !important;
+}

@@ -12,10 +12,6 @@
 
 ## NVM管理器
 
-不支持windows，windows可以使用nvm-windows
+包括卸载node，安装nvm，使用nvm
 
-常用命令：
-
-- `nvm list`
-- `nvm install latest`：最新版
-- `nvm use`：使用版本
+[Mac 下 nvm 安装管理 Node 版本 - 掘金](https://juejin.cn/post/7011423615438553096)

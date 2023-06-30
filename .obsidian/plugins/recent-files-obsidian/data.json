@@ -1,0 +1,67 @@
+{
+  "recentFiles": [
+    {
+      "basename": "ChatGPT插件开发原理",
+      "path": "ChatGPT/ChatGPT插件开发原理.md"
+    },
+    {
+      "basename": "node版本工具",
+      "path": "Node/node版本工具.md"
+    },
+    {
+      "basename": "相关概念",
+      "path": "Vue/相关概念.md"
+    },
+    {
+      "basename": "Canvas",
+      "path": "HTML/Canvas.md"
+    },
+    {
+      "basename": "iframe",
+      "path": "HTML/iframe.md"
+    },
+    {
+      "basename": "相关概念",
+      "path": "React/相关概念.md"
+    },
+    {
+      "basename": "HTML",
+      "path": "HTML/HTML.md"
+    },
+    {
+      "basename": "Linux",
+      "path": "Linux/Linux.md"
+    },
+    {
+      "basename": "Mac",
+      "path": "Mac/Mac.md"
+    },
+    {
+      "basename": "未命名",
+      "path": "TypeScript/未命名.md"
+    },
+    {
+      "basename": "基础类型",
+      "path": "TypeScript/基础类型.md"
+    },
+    {
+      "basename": "第二章：面向对象",
+      "path": "TypeScript/第二章：面向对象.md"
+    },
+    {
+      "basename": "jpa",
+      "path": "数据库/jpa.md"
+    },
+    {
+      "basename": "浏览器兼容问题处理",
+      "path": "CSS/浏览器兼容问题处理.md"
+    },
+    {
+      "basename": "zookeeper",
+      "path": "微服务/zookeeper.md"
+    }
+  ],
+  "omittedPaths": [],
+  "maxLength": null,
+  "openType": "tab"
+}
