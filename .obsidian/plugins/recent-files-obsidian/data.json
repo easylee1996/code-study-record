@@ -1,8 +1,48 @@
 {
   "recentFiles": [
     {
+      "basename": "apply、call和bind详解",
+      "path": "JavaScript/apply、call和bind详解.md"
+    },
+    {
+      "basename": "this详解",
+      "path": "JavaScript/this详解.md"
+    },
+    {
+      "basename": "装饰器详解",
+      "path": "TypeScript/装饰器详解.md"
+    },
+    {
+      "basename": "环境安装配置",
+      "path": "TypeScript/环境安装配置.md"
+    },
+    {
+      "basename": "⾃定义类型保护的类型谓词is",
+      "path": "TypeScript/⾃定义类型保护的类型谓词is.md"
+    },
+    {
+      "basename": "Never类型应用场景",
+      "path": "TypeScript/Never类型应用场景.md"
+    },
+    {
+      "basename": "工具类型详解",
+      "path": "TypeScript/工具类型详解.md"
+    },
+    {
       "basename": "ChatGPT插件开发原理",
       "path": "ChatGPT/ChatGPT插件开发原理.md"
+    },
+    {
+      "basename": "mac系统网络专题",
+      "path": "Mac/mac系统网络专题.md"
+    },
+    {
+      "basename": "vscodevim练习手册",
+      "path": "编程软件/键盘侠养成训练营/vscodevim练习手册.md"
+    },
+    {
+      "basename": "vscode练习手册",
+      "path": "编程软件/键盘侠养成训练营/vscode练习手册.md"
     },
     {
       "basename": "node版本工具",
@@ -35,18 +75,6 @@
     {
       "basename": "Mac",
       "path": "Mac/Mac.md"
-    },
-    {
-      "basename": "未命名",
-      "path": "TypeScript/未命名.md"
-    },
-    {
-      "basename": "基础类型",
-      "path": "TypeScript/基础类型.md"
-    },
-    {
-      "basename": "第二章：面向对象",
-      "path": "TypeScript/第二章：面向对象.md"
     },
     {
       "basename": "jpa",

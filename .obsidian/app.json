@@ -8,5 +8,12 @@
   "alwaysUpdateLinks": true,
   "spellcheck": false,
   "readableLineLength": true,
-  "tabSize": 4
+  "tabSize": 4,
+  "pdfExportSettings": {
+    "includeName": true,
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
 }

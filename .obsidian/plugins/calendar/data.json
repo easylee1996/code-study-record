@@ -5,6 +5,6 @@
   "showWeeklyNote": true,
   "weeklyNoteFormat": "",
   "weeklyNoteTemplate": "",
-  "weeklyNoteFolder": "",
+  "weeklyNoteFolder": "/周记",
   "localeOverride": "system-default"
 }

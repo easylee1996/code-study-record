@@ -1,4 +1,5 @@
-#todo
+##todo
+
 - [x] ChatGPT介绍
 - [x] ChatGPT Plugins介绍
 - [x] langchain框架介绍
@@ -46,11 +47,6 @@ ChatGPT Plugins是OpenAI推出的插件服务，目前官方提供语言翻译�
 以本地知识库插件为例，简单介绍一下使用langchain开发问答插件的原理：
 ![[Pasted image 20230627193155.png]]
 ## 本地知识库代码演示
-
-ChatGPT帐号
-用户名：`rg.a.dgn.03285.3.128@gmail.com`
-密码：`$5166AFRe`
-OPENAI_API_KEY：`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`
 
 导入本地文档
 ![[CleanShot 2023-06-28 at 13.37.29@2x.png]]

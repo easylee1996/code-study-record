@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "129c70d64ed689df",
+        "id": "1f9c7d5352bed7a9",
         "type": "tabs",
         "children": [
           {
-            "id": "ae2810541f86416c",
+            "id": "d9fdbdeb62918f73",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ChatGPT/ChatGPT插件开发原理.md",
+                "file": "JavaScript/apply、call和bind详解.md",
                 "mode": "source",
                 "backlinks": false,
                 "source": false
@@ -50,7 +50,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "网络",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -95,7 +95,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ChatGPT/ChatGPT插件开发原理.md"
+                "file": "JavaScript/apply、call和bind详解.md"
               }
             }
           },
@@ -124,7 +124,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ChatGPT/ChatGPT插件开发原理.md",
+                "file": "JavaScript/apply、call和bind详解.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -141,7 +141,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ChatGPT/ChatGPT插件开发原理.md",
+                "file": "JavaScript/apply、call和bind详解.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -193,8 +193,23 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "8563acc19fbe17f4",
+  "active": "d9fdbdeb62918f73",
   "lastOpenFiles": [
+    "JavaScript/this详解.md",
+    "JavaScript/apply、call和bind详解.md",
+    "TypeScript/装饰器详解.md",
+    "TypeScript/环境安装配置.md",
+    "TypeScript/⾃定义类型保护的类型谓词is.md",
+    "TypeScript/Never类型应用场景.md",
+    "TypeScript/基础类型.md",
+    "TypeScript/工具类型详解.md",
+    "ChatGPT/ChatGPT插件开发原理.md",
+    "Mac/mac系统网络专题.md",
+    "编程软件/键盘侠养成训练营/vscodevim练习手册.md",
+    "编程软件/键盘侠养成训练营/vscode练习手册.md",
+    "ChatGPT/ChatGPT插件开发原理.zip",
+    "ChatGPT/归档.zip",
+    "TypeScript/第一章：快速入门.md",
     "ChatGPT/assets/CleanShot 2023-06-28 at 15.37.26@2x.png",
     "ChatGPT/assets/CleanShot 2023-06-28 at 15.35.38@2x.png",
     "ChatGPT/assets/CleanShot 2023-06-28 at 15.06.17@2x 1.png",
@@ -204,10 +219,8 @@
     "ChatGPT/assets/CleanShot 2023-06-28 at 13.38.53@2x.png",
     "ChatGPT/assets/CleanShot 2023-06-28 at 13.37.29@2x.png",
     "Node/node版本工具.md",
-    "ChatGPT/ChatGPT插件开发原理.md",
     "ChatGPT/assets/CleanShot 2023-06-27 at 19.54.53@2x.png",
     "ChatGPT/assets/CleanShot 2023-06-27 at 19.52.03@2x.png",
-    "ChatGPT/assets/Pasted image 20230627193155.png",
     "Vue/相关概念.md",
     "HTML/未命名.md",
     "ChatGPT/Pasted image 20230627174007.gif.md",
@@ -219,28 +232,15 @@
     "HTML/HTML.md",
     "Linux/Linux.md",
     "Mac/Mac.md",
-    "TypeScript/未命名.md",
-    "TypeScript/基础类型.md",
     "Context/spacesLastSync.log",
     "Context",
     "TypeScript/第二章：面向对象.md",
     "数据库/jpa.md",
-    "CSS/浏览器兼容问题处理.md",
-    "微服务/zookeeper.md",
-    "Vue/watch详解.md",
-    "spring/spring.md",
-    "README.md",
-    "2023-06-26.md",
-    "2023-W22.md",
-    "TypeScript/第一章：快速入门.md",
-    "TypeScript/环境安装配置.md",
     "Koa",
     "ChatGPT",
     "工具和其它/assets/java工具、常用类库/src=http%3a%2f%2finews.gtimg.com%2fnewsapp_bt%2f0%2f14004711543%2f1000&refer=http%3a%2f%2finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg",
     "工具和其它/assets/RabbitMQ/rabbitmq-server-3.8.2-1.el7.noarch.rpm",
     "工具和其它/assets/RabbitMQ/erlang-22.3-1.el7.x86_64.rpm",
-    "工具和其它/assets/相关概念",
-    "工具和其它/assets/tomcat",
     "未命名 1.canvas",
     "未命名.canvas"
   ]
