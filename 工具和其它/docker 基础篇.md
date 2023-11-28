@@ -1,3 +1,7 @@
+---
+创建时间: 2023-03-14T18:15
+更新时间: 2023-11-23T11:47
+---
 # Docker概述
 
 Docker 是一种容器技术，主要拥有解决环境部署问题，只需要安装一次软件、配置一次配置文件，然后直接一键移植或者复制到新的机器上，方便做持续集成的容器虚拟化技术。
@@ -126,7 +130,7 @@ rm -rf /var/lib/containerd
 
 `docker image`
 
-![image-20220611120732503](assets/docker/image-20220611120732503.png)
+![image-20220611120732503](image-20220611120732503.png)
 
 信息说明：
 
@@ -154,7 +158,7 @@ rm -rf /var/lib/containerd
 
 信息说明：
 
-![image-20220611121513945](assets/docker/image-20220611121513945.png)
+![image-20220611121513945](image-20220611121513945.png)
 
 - OFFICIAL：是否官方
 - AUTOMATED：是否是自动构建的
@@ -215,7 +219,7 @@ OPTIONS 选项说明：
   - -p：指定映射端口，比如第一种方式在本机所有 ip 地址上访问 8080，即可访问到对应容器的 80 端口对应的服务
   - 举例启动 tomcat：`docker run -d -p 8888:8080 -v /root/tomcat/:/usr/local/tomcat/webapps/ tomcat` 后面的是对这个容器启动之后的一些参数配置 [ARG...]
   
-  ![image-20220615020705170](assets/docker/image-20220615020705170.png)
+  ![image-20220615020705170](image-20220615020705170.png)
 
 启动已停止的容器：
 
@@ -272,7 +276,7 @@ OPTIONS 选项说明：
 
 ### 其它命令汇总
 
-![image-20220615132648482](assets/docker/image-20220615132648482.png)
+![image-20220615132648482](image-20220615132648482.png)
 
 - attach   Attach to a running container         # 当前 shell 下 attach 连接指定运行镜像
 - build   Build an image from a Dockerfile        # 通过 Dockerfile 定制镜像
@@ -316,7 +320,7 @@ OPTIONS 选项说明：
 
 保存和提交有三种方式，分享镜像给其他人推荐使用第一种，要将容器迁移到其它文件或者服务器中，推荐用第二种，如果是准备提交到服务器，创建镜像服务器，那么只能用第三种
 
-![在这里插入图片描述](assets/docker/b33934b0f9364452894bcbd81abd70dc.png)
+![在这里插入图片描述](b33934b0f9364452894bcbd81abd70dc.png)
 
 ## docker save & load
 

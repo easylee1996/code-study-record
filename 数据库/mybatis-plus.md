@@ -1,4 +1,8 @@
-![image-20220513211057680](assets/mybatis-plus/image-20220513211057680.png)
+---
+创建时间: 2023-03-14T18:15
+更新时间: 2023-11-23T11:47
+---
+![image-20220513211057680](image-20220513211057680.png)
 
 # MyBatis-Plus
 
@@ -108,7 +112,7 @@ public class MybatisPlusTest {
 
 BaseMapper接口核心常用API
 
-![image-20220513212242634](assets/mybatis-plus/image-20220513212242634.png)
+![image-20220513212242634](image-20220513212242634.png)
 
 常用方法演示：
 

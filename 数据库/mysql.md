@@ -1,8 +1,12 @@
+---
+创建时间: 2023-03-14T18:15
+更新时间: 2023-11-23T11:47
+---
 # 数据库基础
 
 数据库是学习JavaWeb的一个前置，只有了解了数据库的操作和使用，我们才能更好地组织和管理网站应用产生的数据。
 
-![img](assets/mysql/u=873816781,3605513900&fm=26&fmt=auto.jpeg)
+![img](u=873816781,3605513900&fm=26&fmt=auto.jpeg)
 
 ## 什么是数据库
 
@@ -35,7 +39,7 @@
 
 MySQL就是一种关系型数据库，通过使用关系型数据库，我们就可以很好地存储这样带有一定联系的数据。
 
-![image-20220720173359494](assets/mysql/image-20220720173359494.png)
+![image-20220720173359494](image-20220720173359494.png)
 
 通过构建一个ER图，我们就能很好地理清不同数据模型之间的关系和特点。
 
@@ -408,11 +412,11 @@ SELECT * FROM 表名 别名1, 表名 别名2
 
 * 通过使用`inner join`进行内连接，只会返回两个表满足条件的交集部分：
 
-![在这里插入图片描述](assets/mysql/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg1ODIwMQ==,size_16,color_FFFFFF,t_70.png)
+![在这里插入图片描述](watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg1ODIwMQ==,size_16,color_FFFFFF,t_70.png)
 
 * 通过使用`left join`进行左连接，不仅会返回两个表满足条件的交集部分，也会返回左边表中的全部数据，而在右表中缺失的数据会使用`null`来代替（右连接`right join`同理，只是反过来而已，这里就不再介绍了）：
 
-![在这里插入图片描述](assets/mysql/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg1ODIwMQ==,size_16,color_FFFFFF,t_70-20220505102918697.png)
+![在这里插入图片描述](watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80Mzg1ODIwMQ==,size_16,color_FFFFFF,t_70-20220505102918697.png)
 
 ## 嵌套查询
 
@@ -673,7 +677,7 @@ explain select * from student where name = '小王';
 
 我们首先来看看哈希表，实际上就是计算Hash值来快速定位：
 
-![image-20220517232259800](assets/mysql/image-20220517232259800.png)
+![image-20220517232259800](image-20220517232259800.png)
 
 通过对Key进行散列值计算，我们可以直接得到对应数据的存放位置，它的查询效率能够达到O(1)，但是它也存在一定的缺陷：
 
@@ -695,7 +699,7 @@ explain select * from student where name = '小王';
   2. Pi为指向子树根的结点，且指针P(i)指向的子树中所有结点的键值均小于Ki，但都大于K(i-1)。  
   3. 键值的个数n必须满足： [ceil(m / 2)-1] <= n <= m-1。
 
-![img](assets/mysql/654.png)
+![img](654.png)
 
 比如现在我们要对键值为**10**的记录进行查找，过程如下：
 
@@ -706,7 +710,7 @@ explain select * from student where name = '小王';
 
 我们接着来看，虽然BTree能够很好地利用二叉查找树的思想大幅度减少查找次数，但是它的查找效率还是很低，因此它的优化版本B+Tree诞生了，它拥有更稳定的查询效率和更低的IO读取次数：
 
-![img](assets/mysql/646.png)
+![img](646.png)
 
 我们可以发现，它和BTree有一定的区别：
 
@@ -718,13 +722,13 @@ explain select * from student where name = '小王';
 
 这是MyISAM存储引擎下的B+Tree实现：
 
-![img](assets/mysql/664.png)
+![img](664.png)
 
 这是InnoDB存储引擎下的B+Tree实现：
 
-![img](assets/mysql/543.png)
+![img](543.png)
 
-![img](assets/mysql/543-20220517232839968.png)
+![img](543-20220517232839968.png)
 
 InnoDB与MyISAM实现的不同之处：
 

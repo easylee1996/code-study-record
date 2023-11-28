@@ -1,3 +1,7 @@
+---
+创建时间: 2023-03-14T18:15
+更新时间: 2023-11-23T11:47
+---
 # SSM整合
 
 当项目中需要多个框架的时候，以往各自为战，各自配置太过于麻烦，所以需要将`Spring`、`SpringMVC`、`MyBatis`三个最主流的框架整合搭配。
@@ -10,19 +14,19 @@
 
 使用maven创建最基本的maven项目即可，不需要导入任何依赖
 
-![image-20220512235349720](assets/SSM整合/image-20220512235349720.png)
+![image-20220512235349720](03%20code-study-record/数据库/assets/ssm整合/image-20220512235349720.png)
 
 完成之后我们需要将这个项目改造成一个web项目，点击file->project structure->mudule添加一个web配置
 
-![image-20220512235003664](assets/SSM整合/image-20220512235003664.png)
+![image-20220512235003664](03%20code-study-record/数据库/assets/ssm整合/image-20220512235003664.png)
 
 然后修改右边的`web.xml`配置文件目录(这里其实都可以，只是这个慕课网的项目老师习惯这么安排目录)和**web资源目录**
 
-![image-20220512235206082](assets/SSM整合/image-20220512235206082.png)
+![image-20220512235206082](03%20code-study-record/数据库/assets/ssm整合/image-20220512235206082.png)
 
 修改为：/Users/easylee/Documents/pj/javapj/imooc-reader/src/main/webapp/WEB-INF/web.xml
 
-![image-20220512235228169](assets/SSM整合/image-20220512235228169.png)
+![image-20220512235228169](03%20code-study-record/数据库/assets/ssm整合/image-20220512235228169.png)
 
 修改为：/Users/easylee/Documents/pj/javapj/imooc-reader/src/main/webapp，下面的/不需要修改，就是默认webapp这里开始
 
@@ -30,7 +34,7 @@
 
 这里使用默认的打包配置即可，默认已经配置好：
 
-![image-20220513000241653](assets/SSM整合/image-20220513000241653.png)
+![image-20220513000241653](03%20code-study-record/数据库/assets/ssm整合/image-20220513000241653.png)
 
 接着配置tomcat启动一下即可
 
@@ -86,7 +90,7 @@
 
 注意：默认情况下，导入依赖后，并不会自动导入tomcat的输出目录，需要手动导入到tomcat输出中
 
-![image-20220513155940405](assets/SSM整合/image-20220513155940405.png)
+![image-20220513155940405](03%20code-study-record/数据库/assets/ssm整合/image-20220513155940405.png)
 
 ### 2.配置DispatcherServlet，这是SpringMVC的核心组件，用于请求的获取和转发
 

@@ -1,8 +1,12 @@
+---
+创建时间: 2023-03-14T18:15
+更新时间: 2023-11-23T11:47
+---
 类图是描述类、接口已经他们之间关系的图，它显示了系统中各个类的静态结构，是一种静态模型。 主要由2种类元素（类和接口），4种关系（依赖关系、实现关系、泛化关系和关联关系）组成。
 
 ## 类的属性表示
 
-![img](assets/UML类图/09145138-37ec5e20453045aaafd7fc863b843231.png)
+![img](09145138-37ec5e20453045aaafd7fc863b843231.png)
 
 可见性：public（公有）、private（私有）、Protected（保护）
 
@@ -14,7 +18,7 @@
 
 用来描述继承关系，在 Java 中使用 extends 关键字。
 
-![SoWkIImgAStDuU8goIp9ILLmJyrBBKh](assets/UML类图/SoWkIImgAStDuU8goIp9ILLmJyrBBKh.png)
+![SoWkIImgAStDuU8goIp9ILLmJyrBBKh](SoWkIImgAStDuU8goIp9ILLmJyrBBKh.png)
 
 **类在类图中使用C表示，继承关系使用空心三角形实线链接。**
 
@@ -39,7 +43,7 @@ Vehical <|-- Truck
 
 用来实现一个接口，在 Java 中使用 implement 关键字。
 
-![SoWkIImgAStDuU8goIp9ILK8IatCoQn](assets/UML类图/SoWkIImgAStDuU8goIp9ILK8IatCoQn.png)
+![SoWkIImgAStDuU8goIp9ILK8IatCoQn](SoWkIImgAStDuU8goIp9ILK8IatCoQn.png)
 
 **接口使用I表示，实现使用空心三角形虚线链接。**
 
@@ -63,7 +67,7 @@ MoveBehavior <|.. Run
 
 表示整体由部分组成，但是整体和部分不是强依赖的，整体不存在了部分还是会存在，只是简单的聚在一起的意思，互相没有依赖性。
 
-![SoWkIImgAStDuU8goIp9ILLmJ4ylIar](assets/UML类图/SoWkIImgAStDuU8goIp9ILLmJ4ylIar.png)
+![SoWkIImgAStDuU8goIp9ILLmJ4ylIar](SoWkIImgAStDuU8goIp9ILLmJ4ylIar.png)
 
 **使用空心菱形实线进行连接。**
 
@@ -90,7 +94,7 @@ Computer o-- Screen
 
 组合是强依赖，共存的。
 
-![SoWkIImgAStDuU8goIp9ILLmpiyjo2_](assets/UML类图/SoWkIImgAStDuU8goIp9ILLmpiyjo2_.png)
+![SoWkIImgAStDuU8goIp9ILLmpiyjo2_](SoWkIImgAStDuU8goIp9ILLmpiyjo2_.png)
 
 **使用实心菱形实现进行连接。**
 
@@ -116,9 +120,9 @@ Company *-- DepartmentB
 
 1 对 1、多对 1、多对多这些都是关联关系。
 
-![SoWkIImgAStDuU8goIp9ILLmB2xEJyv](assets/UML类图/SoWkIImgAStDuU8goIp9ILLmB2xEJyv.png)
+![SoWkIImgAStDuU8goIp9ILLmB2xEJyv](SoWkIImgAStDuU8goIp9ILLmB2xEJyv.png)
 
-![img](assets/UML类图/13200325-d65b75f106e54498beb07c86c3483451-20220607084126919.png)
+![img](13200325-d65b75f106e54498beb07c86c3483451-20220607084126919.png)
 
 **使用箭头实线进行连接。**
 
@@ -150,8 +154,8 @@ School "1" - "n" Student
 
 - 当一个类和另一个类关系不明显，只是需要用到另一个类的时候使用一下，那么就看成是依赖关系，只是一种偶然的关系，比如人和火车，只是偶尔用到了火车，生活中并没有什么具体的关联。
 
-  ![LOun2W9134NxVugmbJPp15d4LalxC4O](assets/UML类图/LOun2W9134NxVugmbJPp15d4LalxC4O.png)
+  ![LOun2W9134NxVugmbJPp15d4LalxC4O](LOun2W9134NxVugmbJPp15d4LalxC4O.png)
 
-![img](assets/UML类图/13200342-4152e269f44a4eb29b968bd0809e2f44-20220607084155821.png)
+![img](13200342-4152e269f44a4eb29b968bd0809e2f44-20220607084155821.png)
 
 **使用箭头虚线连接**

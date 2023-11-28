@@ -1,3 +1,7 @@
+---
+创建时间: 2023-03-14T18:15
+更新时间: 2023-11-23T11:47
+---
 # Maven 概述
 
 来源：[代码重工 (gitee.io)](http://heavy_code_industry.gitee.io/code_heavy_industry/pro002-maven/) 已做精简
@@ -8,7 +12,7 @@ Maven 可以方便的从网络上下来别人打包的 jar 包。
 
 同时 Maven 还是一个**构建管理工具**，可以看一下下面这张图：
 
-![img010.74e515e5](assets/maven/img010.74e515e5.png)
+![img010.74e515e5](img010.74e515e5.png)
 
 在本地开发完成代码之后，需要推送到版本控制服务器，然后自动触发钩子程序，Maven 会在持续集成环境，将源代码构建成一个 jar 包或者 war 包，最后部署到服务器上。
 
@@ -30,7 +34,7 @@ Maven 可以方便的从网络上下来别人打包的 jar 包。
 
 ### 工作机制
 
-![img003.f9cc536c](assets/maven/img003.f9cc536c.png)
+![img003.f9cc536c](img003.f9cc536c.png)
 
 Maven 仓库主要包含本地的 Maven 仓库 jar 包、第三方 jar 包，以及 Maven 插件的 jar 包。
 
@@ -48,7 +52,7 @@ Maven 安装包下载之后直接解压即可
 
 maven 3.6.3 版本，新版本的 Maven 都有bug
 
-![image-20220608095114992](assets/maven/image-20220608095114992.png)
+![image-20220608095114992](image-20220608095114992.png)
 
 接着来进行一些配置文件配置，Maven 的核心配置文件是：`conf/settings.xml`
 
@@ -381,23 +385,23 @@ scope 标签指定了，jar 在什么时候生效
 
 任何修改，都应该更新pom
 
-![image-20220608133221077](assets/maven/image-20220608133221077.png)
+![image-20220608133221077](image-20220608133221077.png)
 
 ### Maven 配置
 
 应该将 Maven 设置为自己下载的 Maven，如果不设置，那么将使用 Idea 默认的，不稳定
 
-![image-20220608133457859](assets/maven/image-20220608133457859.png)
+![image-20220608133457859](image-20220608133457859.png)
 
 注意这个配置，当选择自己的 Maven 之后，默认就会使用配置的 Maven 路径下的 `setting.xml`，所以这个选项不需要配置，只有当路径下的 setting.xml 找不到时，才会使用用户路径下的这个默认配置文件
 
-![image-20220608133855259](assets/maven/image-20220608133855259.png)
+![image-20220608133855259](image-20220608133855259.png)
 
 ### 配置 web 项目
 
 要想将一个 Java 项目变为 Web 项目，需要添加 Web 框架支持，这里想给哪个子项目添加就给哪个子项目添加成 Web 项目，注意父项目是不能设置为 Web 项目的，因为父项目是一个 `<packaging>pom</packaging>` 的管理其它项目的父项目，只能是 pom
 
-![image-20220608142817618](assets/maven/image-20220608142817618.png)
+![image-20220608142817618](image-20220608142817618.png)
 
 注意添加了框架支持之后，将 web 文件夹移动到 src/main 目录下，不要单独一个文件夹，然后改名为 **webapp**，文件夹会亮起一个地球的图标才算成功
 
@@ -412,11 +416,11 @@ scope 标签指定了，jar 在什么时候生效
 
 如果直接复制到当前父工程，那么无法识别这是一个 Module，必须在 Project Structure 中的 Module 处导入
 
-![image-20220608153527418](assets/maven/image-20220608153527418.png)
+![image-20220608153527418](image-20220608153527418.png)
 
 如果导入的是一个 web 项目，那么还需要检查一下，是否已经添加了 web 框架相关的信息，如果没有则需要添加一下，如果多了就删除一下(有时候之前有，导入又创建了)
 
-![image-20220608153630338](assets/maven/image-20220608153630338.png)
+![image-20220608153630338](image-20220608153630338.png)
 
 **修改 pom.xml**
 
