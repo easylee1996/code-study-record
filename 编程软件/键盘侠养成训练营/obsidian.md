@@ -1,6 +1,6 @@
 ---
 创建时间: 2023-11-24T09:09
-更新时间: 2023-11-28T18:08
+更新时间: 2023-12-05T10:19
 ---
 ## 安装和配置
 1. 开启obsidian vim模式
@@ -41,11 +41,11 @@
 3. 插入附件 `![[`
 4. 在新面板打开: `cmd + click` 或者 `cmd + 回车`  ,打开并编辑 `cmd + shift + click` 
 ### 全局&搜索相关快捷键
-1. 折叠打开左侧栏：`ctrl + b`，和vscode不同，因为 `cmd + b`有加粗的作用
+1. 折叠打开左侧栏：`ctrl + b`，和vscode不同，因为 `command + b`有加粗的作用
 2. 折叠打开右侧栏： `ctrl + shift + b`
 3. 将焦点聚焦到编辑区： `option + ,`聚焦到文件列表页 `option + .` 同vscode
 4. 将文件在finder中打开： `ctrl + shift + f` 同vscode, `ctrl + shift + l` 显示在文件列表中的位置
 5. 全局搜索： `cmd + shift + f`
 6. 搜索： `cmd + f ` 或者 `/` 通常在文件中搜索一般使用后者这个vim命令
 7. 替换： `cmd + option + f`
-8. 基于tag等搜索：`:tag` 搜索框本身就有提JJ示
+8. 基于tag等搜索：`:tag` 搜索框本身就有提示
