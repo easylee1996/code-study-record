@@ -4,17 +4,7 @@
 ---
 在vue中，组件如果需要css样式隔离，只需要给组件的style标签上添加 `scoped` 属性，就可以实现样式隔离，否则组件内的样式是添加到全局css里面的。
 
-在添加了样式隔离之后，vue的具体做法如下：
-
-1. 给组件的最顶层元素添加一个完全独立的data属性，然后就可以根据不同组件的不同data来区分样式；
-2. 在scoped里面的样式，**所有选择器后面都会添加上这个data属性**，表示这个样式独属于这个组件，其它组件不会引用这些样式；
-
-同时需要注意：
-
-1. 子组件最顶层元素会继承父组件的data，比如父组件设置了scoped，子组件的最顶层元素(vue3中是第一个元素，vue3中可以不设置最外层包裹元素)也会设置相同的data，根据这个，可以直接在父组件设置子组件最顶层div的样式，实现父组件设置子组件样式。
-2. 如果子组件也设置了scoped，那么这个子组件就拥有两个data属性，一个父级的，一个自己的。
-
-下面来看一下，在添加了样式隔离之后，有时候会出现无法给指定元素设置样式，比如第三方组件element的弹窗组件：
+在添加了样式隔离之后，有时候会出现无法给指定元素设置样式，比如第三方组件element的弹窗组件：
 
 ```vue
 <style scoped>
@@ -32,17 +22,7 @@
 
 1. 穿透scoped
 
-stylus的样式穿透使用`>>>` sass和less的样式穿透使用`/deep/`，以及vue自带的 `:deep(xxx)`
-
-添加穿透代码之后，会将样式变为 `[data-v-xxxx] .el-dialog__body`，前面的data属性是当前组件的，也会是dialog子组件最顶层元素的，然后再找下面的el-dialog__body元素，那就找得到了，而不是像之前直接在当前组件内找。
-
-```xml
-<style scoped>
-:deep(.el-dialog__body) {
-  xxxx
-}
-</style>
-```
+stylus的样式穿透使用`>>>` sass和less的样式穿透使用`/deep/`，以及vue自带的 `:deep(xxx)`，后面详细来说穿透scope的原理
 
 2. 使用两个style标签
 
@@ -79,92 +59,50 @@ stylus的样式穿透使用`>>>` sass和less的样式穿透使用`/deep/`，以�
 
 基于上面几种方法，在父组件需要给子组件设置样式，同时父组件添加了scoped属性时，使用上面的方法即可，通常用第一种。
 
-具体原因再理一下：
-
-添加scoped之后，父组件的所有样式class都会加上[data-v-xxxx]，子组件的顶层元素也会加上相同的[data-v-xxxx]，但是子组件内部的元素不会加，因为比如element类似的子组件，就算element类似的子组件添加了scoped，那么也会是一个新的data，其里面的class会加上这个新的data，所以父组件是无法直接操作子组件的内部其它元素的。
-
-所以要使用样式穿透，穿透之后等于样式变成了 `[data-v-xxxx] .el-dialog__body`，也就是操作子组件下级的样式，而不是父组件里面的样式。
-
-来看一个例子：
-
-```vue
+## ::v-deep()核心原理
+1. 打包之后的所有css如果不分包的话，所有css样式会放到一起，也就是写的所有样式都会是全局样式，所以要加上scope来实现独有样式。
+2. 添加了scope，每个组件内部，每个元素(包含子组件)会添加data属性，style中的样式比如className,ID添加相同的data，如 `.class-name[data-v-66cbb946]`，最终css打包到一个文件之后，才实现了样式隔离，都拥有一个相同的data。
+3. 给子组件添加data，其实也就是子组件的最顶层元素会添加这个父组件的相同data，这个vue scope的一个实现细节，因此，在父组件可以直接操作子组件对顶层元素的样式，比如父组件内直接通过子组件class名对子组件进行样式修改:
+```js
 // 父组件
-<template>
-  <div class="app">
-    <show-names></show-names>
-  </div>
-</template>
-
-<style lang="less">
-.show-names {
-  background-color: #000;
-
-  .inner-class {
-    font-size: 200px;
-  }
-}
-</style>
+<div>
+	<child class="child-name"></chid>
+<div>
 
 // 子组件
-<template>
-  <div class="show-names">
-    <div class="inner-class">33333333</div>
-  </div>
-</template>
-<style scoped></style>
-```
+<div>
+	<div class="inner">
+	</div>
+</div>
 
-上面的子组件字体会设置为200px，但是父组件设置了scoped之后，就不会生效了
-
-```
-// 父组件
-<template>
-  <div class="app">
-    <show-names></show-names>
-  </div>
-</template>
-
-<style lang="less" scoped>
-.show-names {
-  background-color: #000;
-
-  .inner-class {
-    font-size: 200px;
-  }
+<style scope>
+// 直接修改子组件的样式
+.child-name {
+	xxx
 }
 </style>
-
-// 子组件
-<template>
-  <div class="show-names">
-    <div class="inner-class">33333333</div>
-  </div>
-</template>
-<style scoped></style>
 ```
-
-上面的代码会在渲染之后添加如下样式：
-
-```vue
-// data-v-7a7a37b1是父组件的data，也是子组件顶层元素的data，但是父组件里面可没有.inner-class，所以不生效，除非是.show-names[data-v-7a7a37b1] .inner-class
-.show-names .inner-class[data-v-7a7a37b1] {
-  font-size: 200px;
+打包之后上面的div和子组件child的最顶层元素(比如child最顶层元素是一个div，则这个div会加上相同data)都会加上一个data，比如data-v-1234，同时 .child-name这个样式也会变为 `.child-name[data-v-1234]`，很显然这个样式可以修改到子组件的顶层元素，因为它也是这个data。
+4. 子组件内除了顶部元素之外的其它元素，不会加上父组件的scope，如果子组件内部也有scope，则会生成自己的data，子组件顶层元素会有两个data，如果子组件内部没有scope，则只有最顶层元素拥有父组件的data，其它元素没有data。
+5. 因为子组件的其它元素没有父组件的data属性，我们在父组件对子组件其它元素进行修改时，无法生效：
+```js
+// 父组件内
+<style scope>
+.child-name .inner {
+	xxx // 无法生效
 }
+</style>
 ```
-
-改成样式穿透之后，才可以生效，相当于给子组件里面的样式设置样式，而不是给父组件里面的inner-class设置，父组件根本没有这个元素
-
-```vue
-// class变成了.show-names[data-v-7a7a37b1] .inner-class
-.show-names {
-  :deep(.inner-class) {
-    font-size: 200px;
-  }
-}
+上面的父组件样式打包后会变为 `.child-name .inner[data-v-父组件data]`，而子组件的其它元素无论是否添加scope都无法生效：
+- 子组件添加scope：子组件元素拥有自己的data，上面的父组件样式因为有父组件data，肯定无法作用到拥有子组件data的元素上
+- 子组件未添加scope：子组件虽然没有自己的data，但是上面的父组件样式后面包含了父组件data属性选择器，所以还是无法作用到子组件上
+6. 那么当我们想在父组件内修改子组件里的其它元素时，就必须使用样式穿透`:deep()`语法，下面来看看使用了样式穿透语法会发生什么：
+```js
+// 父组件内
+<style scope>
+::v-deep(.child-name .inner) {}
+</style>
 ```
-
-**核心原因是：在父组件中设置样式，所有class都会添加上父组件的data，父组件又没有这个元素，所以无法识别，子组件有自己的data，子组件内部元素又自己的，所以父级设置的是带父级data的样式，肯定影响不了子级的，样式穿透之后，将子组件内部的class的data去掉了(子组件顶层元素没去)，所以能够生效(父组件设置的任何css都是在父组件文件内)**
-
-同时element还有一些组件会直接放置在index.html里面和#app同级，这种也许要设置样式穿透或者设置为全局css，否则无法生效，原因同样，组件加上data只会给当前组件设置，这些元素都不在组件内，肯定无法给它设置样式。
-
-简单来说：给一个子组件的最顶层元素添加样式，则直接在父组件中给子组件顶层元素的class进行操作即可，因为子组件顶层class会赋值父组件相同的data，而要给子组件的内部其它class设置，则需要使用 `:deep()`,因为子组件也设置了 `scoped` , 子组件里面的class会赋值子组件的data，不用深度css，无法添加到子组件其它class之上
+上面的代码打包后会变成 `[data-v-父组件data] .child-name .inner`，表示在全局样式中对父组件下级的这个样式进行操作，不加样式穿透是`.child-name .inner[data-v-父组件data]`，不加是对这个样式进行限定，加了是操作这个data的下级元素，两者有明显的区别。
+7. 其实就是vue不会给添加深度选择器的class添加限定data，但是仍然还是会有一定的限定，因为最后生成的是 `[data-v-父组件data] .child-name .inner`，而不是 `.child-name .inner`，还是限定了在父组件下的 `.child-name .inner` 才生效，而不是所有的 `.child-name .inner` 都会生效，相当于只是把子组件的这个样式提升了一级，到了父组件可以选择，而不是提到了全局都可以选择。
+8. 掌握这个，可以解决的问题是，很多时候我们引入外部子组件，我们不好修改子组件的内部样式，就可以用深度选择器在父组件内操作，即使是自己写的可以操作的子组件，这样写也可以根据不同的父组件，给同一个子组件定制不同的样式。
