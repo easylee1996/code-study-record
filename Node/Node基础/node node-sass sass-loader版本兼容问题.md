@@ -42,7 +42,7 @@ sass-loader 7.3.1，node-sass 4.7.2
 sass-loader 7.3.1，node-sass 4.14.1
 sass-loader 10.0.1，node-sass 6.0.1
 
-> 上面是部分对应规则，首先根据node版本确定好node-sass的版本，然后再选择node-sass的版本。
+> 上面是部分对应规则，首先根据node版本确定好node-sass的版本，然后再选择sass-loader的版本。
 > 同时上面只是一部分sass-loader的版本对应，因为没有提供官方的对应规则，所以上面的版本还是不对的话，确定好node和node-sass版本之后，可以一个一个尝试sass-loader的版本，所有版本：[sass-loader - npm](https://www.npmjs.com/package/sass-loader?activeTab=versions)
 
 ## 其它说明
