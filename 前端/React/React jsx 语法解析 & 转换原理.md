@@ -1,4 +1,3 @@
- 
 ## jsx介绍 
  
  jsx是一种JavaScript的语法扩展（eXtension），也在很多地方称之为JavaScript XML，因为看起就是一段XML语法，用于描述UI界面，并且可以和JavaScript代码结合使用。

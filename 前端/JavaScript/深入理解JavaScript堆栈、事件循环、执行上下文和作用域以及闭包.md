@@ -1,7 +1,3 @@
----
-创建时间: 2023-09-01T10:51
-更新时间: 2023-11-29T19:41
----
 ## 1. 堆栈
 
 在JavaScript中，内存堆是内存分配的地方，调用栈是代码执行的地方。
@@ -277,7 +273,7 @@ var fn = function (x) {
 
 函数作为参数传递，进入另一个函数作为另一个函数的内容，此时传递的这个函数就是一个闭包，注意一下，这里的max根据前面的作用域原则，是读取函数定义时的max，而不是调用时。
 
-## 参考文献
+## 参考文章
 
 - 阮一峰《JavaScript 运行机制详解：再谈Event Loop》：https://www.ruanyifeng.com/blog/2014/10/event-loop.html
 - 异步和 event-loop：https://github.com/wangfupeng1988/js-async-tutorial/blob/master/part1-basic/02-event-loop.md
