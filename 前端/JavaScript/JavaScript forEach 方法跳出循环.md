@@ -83,7 +83,7 @@ try {
 var list = [1, 2, 3, 4, 5]
 list.forEach((v, index) => {
 if (v == 3) {
-  list = list.splice(0, index)
+  list.splice(0, index)
 }
 
 console.log(index)
