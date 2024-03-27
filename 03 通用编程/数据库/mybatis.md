@@ -772,7 +772,7 @@ public interface DataSource  extends CommonDataSource, Wrapper {
 
 一般比较常用的`DataSource`实现，都是采用池化技术，就是在一开始就创建好N个连接，这样之后使用就无需再次进行连接，而是直接使用现成的`Connection`对象进行数据库操作。
 
-![image-20220508150917955](03%20code-study-record/03%20通用编程/数据库/assets/mybatis/image-20220508150917955.png)
+![image-20220508150917955](code-study-record/03%20通用编程/数据库/assets/mybatis/image-20220508150917955.png)
 
 当然，也可以使用传统的即用即连的方式获取`Connection`对象，Mybatis为我们提供了几个默认的数据源实现，我们之前一直在使用的是官方的默认配置，也就是池化数据源：
 

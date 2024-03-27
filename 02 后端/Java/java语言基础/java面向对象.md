@@ -534,7 +534,7 @@ public class Main {
 
 ### 成员修饰符
 
-![image-20220303163755158](03%20code-study-record/02%20后端/Java/java语言基础/assets/java面向对象/image-20220303163755158.png)
+![image-20220303163755158](code-study-record/02%20后端/Java/java语言基础/assets/java面向对象/image-20220303163755158.png)
 
 当不发产生继承关系时，一个成员是以上修饰符时，当前类、同包类、子类、其它包的类(当然前提是要import进来)，访问这个成员的情况
 
@@ -557,7 +557,7 @@ public class Main {
 
 具体情况如下：
 
-![image-20220303171527741](03%20code-study-record/02%20后端/Java/java语言基础/assets/java面向对象/image-20220303171527741.png)
+![image-20220303171527741](code-study-record/02%20后端/Java/java语言基础/assets/java面向对象/image-20220303171527741.png)
 
 # 数组类型
 
@@ -1188,7 +1188,7 @@ Java并不是纯面向对象的语言，虽然Java语言是一个面向对象的
 
 我们的基本类型，如果想通过对象的形式去使用他们，Java提供的基本类型包装类，使得Java能够更好的体现面向对象的思想，同时也使得基本类型能够支持对象操作！
 
-![img](03%20code-study-record/02%20后端/Java/java语言基础/assets/java面向对象/1504650-20190122173636211-1359168032.png)
+![img](code-study-record/02%20后端/Java/java语言基础/assets/java面向对象/1504650-20190122173636211-1359168032.png)
 
 * byte  ->  Byte      
 * boolean  ->  Boolean   

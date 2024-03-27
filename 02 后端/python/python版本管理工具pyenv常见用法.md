@@ -26,4 +26,4 @@ echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 - 指定全局版本：`pyenv global 3.10.4`
 - 指定当前目录的 python 版本：`pyenv local 3.10.4`
 - 查看当前使用的 Python 版本：`pyenv version`
-- 查看安装的所有 python 版本：`pyenv version`
+- 查看安装的所有 python 版本：`pyenv versions`

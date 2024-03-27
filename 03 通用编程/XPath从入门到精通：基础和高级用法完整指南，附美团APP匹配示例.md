@@ -83,6 +83,7 @@ xpath 中绝对路径使用 `/` 开始，比如：`/html/body/div[1]/a/img`，�
 定位包含 class 属性，值为 `cat` 的 li 属性元素
 ### 4. 使用逻辑运算符定位
 常用逻辑运算符包括：`and`、`or`、`not` 三种
+注意：and、or、not 通常用于[]内条件，& |通常用于组合多个匹配
 示例：
 4.1 `//li[@class and @class="cat"]`
 ![[CleanShot 2024-02-01 at 09.58.32@2x.png]]

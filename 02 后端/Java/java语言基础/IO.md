@@ -502,7 +502,7 @@ public static void main(String[] args) {
 
 我们平时使用的`println`方法就是PrintStream中的方法，它会直接打印基本数据类型或是调用对象的`toString()`方法得到一个字符串，并将字符串转换为字符，放入缓冲区再经过转换流输出到给定的输出流上。
 
-![img](03%20code-study-record/02%20后端/Java/java语言基础/assets/IO/70.png)
+![img](code-study-record/02%20后端/Java/java语言基础/assets/IO/70.png)
 
 因此实际上内部还包含这两个内容：
 

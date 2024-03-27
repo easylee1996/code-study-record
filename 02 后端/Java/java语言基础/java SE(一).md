@@ -110,7 +110,7 @@ javadoc -d 文件夹名 -xx -yy Demo.java
 
 tools->Generate JavaDoc
 
-![这里写图片描述](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/70.png)
+![这里写图片描述](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/70.png)
 
 
 
@@ -166,7 +166,7 @@ tools->Generate JavaDoc
 
 ### java类的组织形式
 
-![image-20220223211633958](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220223211633958-7657014.png)
+![image-20220223211633958](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220223211633958-7657014.png)
 
 ## 数据类型
 
@@ -258,7 +258,7 @@ tools->Generate JavaDoc
 
 ### 整型
 
-![image-20220223205822925](03%20code-study-record/02%20后端/Java/java语言基础/assets/2.变量/image-20220223205822925.png)
+![image-20220223205822925](code-study-record/02%20后端/Java/java语言基础/assets/2.变量/image-20220223205822925.png)
 
 
 
@@ -270,7 +270,7 @@ tools->Generate JavaDoc
 
 ### 浮点类型
 
-![image-20220223210137872](03%20code-study-record/02%20后端/Java/java语言基础/assets/2.变量/image-20220223210137872.png)
+![image-20220223210137872](code-study-record/02%20后端/Java/java语言基础/assets/2.变量/image-20220223210137872.png)
 
 #### 使用细节
 
@@ -329,7 +329,7 @@ boolean类型，只允许取值true和false，占用1个字节
 
 数据类型转换基本是按照类型占用空间小可以转大，大不能转小设计的
 
-![image-20220223213535909](03%20code-study-record/02%20后端/Java/java语言基础/assets/2.变量/image-20220223213535909.png)
+![image-20220223213535909](code-study-record/02%20后端/Java/java语言基础/assets/2.变量/image-20220223213535909.png)
 
 #### 使用细节
 
@@ -399,7 +399,7 @@ s5.charAt(0)
 
 ### 算数运算符
 
-![image-20220224162206254](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224162206254.png)
+![image-20220224162206254](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224162206254.png)
 
 #### 使用细节
 
@@ -432,11 +432,11 @@ i++
 
 ### 关系运算符
 
-![image-20220224163938148](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224163938148.png)
+![image-20220224163938148](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224163938148.png)
 
 ### 逻辑运算符
 
-![image-20220224164016199](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224164016199.png)
+![image-20220224164016199](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224164016199.png)
 
 #### 使用细节
 
@@ -444,7 +444,7 @@ i++
 
 ### 赋值运算符
 
-![image-20220224164728529](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224164728529.png)
+![image-20220224164728529](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224164728529.png)
 
 
 
@@ -480,7 +480,7 @@ byte c = a > b ? 1 : 2;
 
 ### 运算符优先级
 
-![image-20220224175307730](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224175307730.png)
+![image-20220224175307730](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224175307730.png)
 
 
 
@@ -518,7 +518,7 @@ System.out.println(name + age + score);
 
 要学会位运算，首先就要对进制有足够的了解
 
-![image-20220224180502404](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224180502404.png)
+![image-20220224180502404](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220224180502404.png)
 
 
 
@@ -620,7 +620,7 @@ System.out.println(Integer.toBinaryString(-8>>>1));
 
 在for循环三个条件语句中，每个语句可以设置多个，中间必须是控制条件，返回布尔值
 
-![image-20220227221229860](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220227221229860.png)
+![image-20220227221229860](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220227221229860.png)
 
 
 
@@ -863,7 +863,7 @@ Cat cat = new Cat();
 
 #### 对象创建的流程
 
-![image-20220228214500700](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220228214500700.png)
+![image-20220228214500700](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220228214500700.png)
 
 - 1.先在方法区加载Person类
 - 2.new Person时在堆中创建对应的空间
@@ -1052,7 +1052,7 @@ public class Main {
 
 ### 成员修饰符
 
-![image-20220303163755158](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220303163755158.png)
+![image-20220303163755158](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220303163755158.png)
 
 当不发产生继承关系时，一个成员是以上修饰符时，当前类、同包类、子类、其它包的类(当然前提是要import进来)，访问这个成员的情况
 
@@ -1075,7 +1075,7 @@ public class Main {
 
 具体情况如下：
 
-![image-20220303171527741](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220303171527741.png)
+![image-20220303171527741](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220303171527741.png)
 
 
 
@@ -1584,7 +1584,7 @@ final可以修饰类、属性、方法、和局部变量，修饰后不可以被
 
 ## 内部类
 
-![image-20220305175631009](03%20code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220305175631009.png)
+![image-20220305175631009](code-study-record/02%20后端/Java/java语言基础/assets/java基础知识/image-20220305175631009.png)
 
 
 

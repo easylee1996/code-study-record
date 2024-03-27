@@ -2,7 +2,7 @@
 创建时间: 2023-03-14T18:15
 更新时间: 2023-11-23T11:47
 ---
-![spring cloud](03%20code-study-record/02%20后端/Java/spring/assets/springcloud/format,f_jpg.jpeg)
+![spring cloud](code-study-record/02%20后端/Java/spring/assets/springcloud/format,f_jpg.jpeg)
 
 # Spring Cloud概述
 

@@ -51,7 +51,7 @@ vscodevim是vscode中一款实现了vim的插件，绝大多数vim功能都可�
 
 - vscode快捷键配置文件：keybingdings.json，`cmd+shift+p` 搜索 `keyboard`，或者在设置位置点击打开快捷方式，`cmd + k cmd + k`也可以打开，**适合复杂配置，可以配置修饰符**
 
-![image-20230210171431338](03%20code-study-record/05%20软件/键盘侠养成训练营/assets/vscodevim/image-20230210171431338.png)
+![image-20230210171431338](code-study-record/05%20软件/键盘侠养成训练营/assets/vscodevim/image-20230210171431338.png)
 
 注意多个相同快捷键，在上面的优先级越高，配置vim的格式如下：
 
@@ -73,7 +73,7 @@ vscodevim是vscode中一款实现了vim的插件，绝大多数vim功能都可�
 
 在 keybingdings.json 内配置(快捷键 `cmd+shift+p`  打开命令搜索框):
 
-![img](03%20code-study-record/05%20软件/键盘侠养成训练营/assets/vscodevim/image.png)
+![img](code-study-record/05%20软件/键盘侠养成训练营/assets/vscodevim/image.png)
 
 ```json
 {
@@ -96,7 +96,7 @@ $ defaults delete -g ApplePressAndHoldEnabled
 
 然后将系统设置中键盘设置这两项配置调到最快：
 
-![image-20230210132956215](03%20code-study-record/05%20软件/键盘侠养成训练营/assets/vscodevim/image-20230210132956215.png)
+![image-20230210132956215](code-study-record/05%20软件/键盘侠养成训练营/assets/vscodevim/image-20230210132956215.png)
 
 #### 3. 在 iterm2 中按键 option 不生效的问题
 

@@ -256,7 +256,7 @@ public static void main(String[] args) throws IOException {
 
 实际上，整个日志的输出流程如下：
 
-![image-20220508000052697](03%20code-study-record/02%20后端/Java/java语言基础/assets/java工具、常用类库/image-20220508000052697.png)
+![image-20220508000052697](image-20220508000052697.png)
 
 ## Properties配置文件
 

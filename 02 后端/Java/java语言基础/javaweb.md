@@ -438,7 +438,7 @@ Location：让网页重新定位；
 
 - 项目上右键添加web相关框架支持
 
-![image-20220426193844506](03%20code-study-record/02%20后端/Java/java语言基础/assets/javaweb/image-20220426193844506.png)
+![image-20220426193844506](code-study-record/02%20后端/Java/java语言基础/assets/javaweb/image-20220426193844506.png)
 
 ![image-20220426193909626](image-20220426193909626.png)
 
@@ -446,9 +446,9 @@ Location：让网页重新定位；
 
 - tomcat服务器配置
 
-![image-20220426204012405](03%20code-study-record/02%20后端/Java/java语言基础/assets/javaweb/image-20220426204012405.png)
+![image-20220426204012405](code-study-record/02%20后端/Java/java语言基础/assets/javaweb/image-20220426204012405.png)
 
-注意上面的两个热更新需要配置deployment之后才会出现	![image-20220426204119333](03%20code-study-record/02%20后端/Java/java语言基础/assets/javaweb/image-20220426204119333.png)
+注意上面的两个热更新需要配置deployment之后才会出现	![image-20220426204119333](code-study-record/02%20后端/Java/java语言基础/assets/javaweb/image-20220426204119333.png)
 
 # MVC三层架构
 
