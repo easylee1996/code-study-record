@@ -2,7 +2,7 @@
 from loguru import logger
 
 # 配置输出日志文件和以及输出级别,debug < info < warning < error
-logger.add("output.log", level="INFO")
+*logger.add("output.log", level="INFO")*
 
 # 记录不同级别的日志
 logger.debug("这是一个 debug 级别的日志")
