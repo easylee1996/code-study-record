@@ -48,7 +48,8 @@ sass-loader 10.0.1，node-sass 6.0.1
 ## 其它说明
 1. 出现兼容问题的主要原因在于，早期开发人员使用比如node12版本，安装node-sass4+版本和sass-loader4+，可以正常运行，但是后期开发人员使用了更新的node，比如16，而16不支持低版本node-sass。
 2. 同时即便切换到低版本node12中可以正常运行，但项目中使用了一些node12以上的代码语法，比如node14才支持的可选链语法，然后其它开发人员拉代码之后，就要么高版本node无法拉取node-sass包，要么切换低版本无法运行一些高版本node才支持的语法。
-3. 推荐还是使用高版本的node，然后升级node-sass和sass-loader版本。
+3. 推荐还是使用高版本的 node，然后升级 node-sass 和 sass-loader 版本。
+4. 每次操作应该删除 node_modules、package-lock. json 文件 (这个文件不由 git 管理，可能会下载其它分支的包)
 
 ## 其它方法
 直接放弃node-sass，使用dart-sass无缝替换。
