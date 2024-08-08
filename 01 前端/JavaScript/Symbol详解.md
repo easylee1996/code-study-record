@@ -1,9 +1,6 @@
 Symbol是es6出的一种类型，他也是属于原始类型的范畴(string, number, boolean, null, undefined, symbol)，不是类。
-
 主要作用可以用于避免属性重复和创建私有属性(不能完全实现)。
-
 ### 避免属性重复
-
 ```javascript
 const obj = {
     name: 'easylee',
@@ -16,9 +13,8 @@ let name = Symbol('name')
 obj[name] = '123'
 console.log(obj)
 ```
-
 ### 私有属性
-
+当有一些不想使用用户修改的属性，使用这种方式就特别好。
 ```javascript
 let uid = Symbol('uid')
 let obj = {
@@ -30,9 +26,8 @@ console.log(Object.keys(obj)) // []
 console.log(Object.getOwnPropertyNames(obj)) // []
 console.log(Object.getOwnPropertySymbols(obj)) // [Symbol(uid)]
 ```
-
 ### 全局共享
-
+在代码的任意位置都可以获取到。
 ```js
 const name = Symbol('name')
 // 全局拿到共享的属性，方便在多个模块中使用相同的属性名
