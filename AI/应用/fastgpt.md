@@ -8,4 +8,4 @@
 4.如果不进行重定向，当fastgpt直接配置qwen2:7b，然后oneapi里面有多个渠道里面都有qwen2:7b，那么会根据外部的渠道优先级或者随机访问（待验证）
 5.每次修改配置尽量重启服务，要不然很多东西没生效
 6.如果使用sealos在线部署时，请注意fastgpt填写oneapi的地址时要加上 `v1`
-7.不熟m3e向量模型时，密钥是`sk-aaabbbcccdddeeefffggghhhiiijjjkkk`
+7.部署m3e向量模型时，密钥是 `sk-aaabbbcccdddeeefffggghhhiiijjjkkk`
