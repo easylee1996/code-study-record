@@ -33,7 +33,16 @@ N 管理器时一个 npm 的包，所以直接使用 npm 进行安装即可，�
 - `nvm use <version>` ：切换使用指定的版本 node
 - `nvm ls ` ：列出所有安装的版本
 - `nvm alias default <version>` ：如： `nvm alias default 18`
-
+## linux安装
+安装命令：
+```shell
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+```
+更新环境变量：
+`source ~/.bashrc`
+设置淘宝镜像：
+`export NVM_NODEJS_ORG_MIRROR=http://npmmirror.com/mirrors/node/`
+`source ~/.bashrc`
 ## npx 切换 node 版本
 除了上面的两个工具，还可以利用 npx 可以下载模块这个特点，可以指定某个版本的 Node 运行脚本。它的窍门就是使用 npm 的 node 模块。
 ```bash

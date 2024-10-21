@@ -1,6 +1,26 @@
 {
   "recentFiles": [
     {
+      "basename": "oh-my-posh",
+      "path": "05 软件/键盘侠养成训练营/oh-my-posh.md"
+    },
+    {
+      "basename": "zsh",
+      "path": "05 软件/键盘侠养成训练营/zsh.md"
+    },
+    {
+      "basename": "windows搭建appium环境",
+      "path": "02 后端/python/windows搭建appium环境.md"
+    },
+    {
+      "basename": "text2sql调研",
+      "path": "AI/text2sql调研.md"
+    },
+    {
+      "basename": "知识图谱",
+      "path": "AI/应用/知识图谱.md"
+    },
+    {
       "basename": "apply、call和bind详解",
       "path": "JavaScript/apply、call和bind详解.md"
     },

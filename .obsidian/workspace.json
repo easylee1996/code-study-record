@@ -11,11 +11,34 @@
             "id": "d9fdbdeb62918f73",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "05 软件/键盘侠养成训练营/zsh.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "zsh"
+            }
+          },
+          {
+            "id": "6807b3f0d4b56784",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "05 软件/键盘侠养成训练营/oh-my-posh.md",
+                "mode": "source",
+                "backlinks": false,
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "oh-my-posh"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -36,7 +59,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -45,13 +70,15 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "网络",
+                "query": "zsh",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           }
         ]
@@ -66,7 +93,9 @@
             "type": "leaf",
             "state": {
               "type": "recent-files",
-              "state": {}
+              "state": {},
+              "icon": "clock",
+              "title": "Recent Files"
             }
           }
         ]
@@ -89,7 +118,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "05 软件/键盘侠养成训练营/oh-my-posh.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of oh-my-posh"
             }
           },
           {
@@ -100,7 +133,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -108,7 +143,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           },
           {
@@ -117,6 +154,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "02 后端/python/windows搭建appium环境.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,7 +162,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for windows搭建appium环境"
             }
           },
           {
@@ -133,9 +173,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "02 后端/python/windows搭建appium环境.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from windows搭建appium环境"
             }
           }
         ]
@@ -150,7 +193,9 @@
             "type": "leaf",
             "state": {
               "type": "todo",
-              "state": {}
+              "state": {},
+              "icon": "checkmark",
+              "title": "Todo List"
             }
           }
         ]
@@ -165,7 +210,9 @@
             "type": "leaf",
             "state": {
               "type": "calendar",
-              "state": {}
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
             }
           }
         ]
@@ -176,16 +223,21 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:打开快速切换": false,
-      "graph:查看关系图谱": false,
-      "canvas:新建白板": false,
-      "daily-notes:打开/创建今天的日记": false,
-      "templates:插入模板": false,
-      "command-palette:打开命令面板": false
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
     }
   },
-  "active": "d9fdbdeb62918f73",
+  "active": "6807b3f0d4b56784",
   "lastOpenFiles": [
+    "05 软件/键盘侠养成训练营/zsh.md",
+    "05 软件/键盘侠养成训练营/oh-my-posh.md",
+    "02 后端/python/windows搭建appium环境.md",
+    "AI/text2sql调研.md",
+    "AI/应用/知识图谱.md",
     "JavaScript/this详解.md",
     "JavaScript/apply、call和bind详解.md",
     "TypeScript/装饰器详解.md",
@@ -220,13 +272,8 @@
     "HTML/iframe.md",
     "React/相关概念.md",
     "React/React.md",
-    "HTML/HTML.md",
-    "Linux/Linux.md",
-    "Mac/Mac.md",
     "Context/spacesLastSync.log",
     "Context",
-    "TypeScript/第二章：面向对象.md",
-    "数据库/jpa.md",
     "Koa",
     "ChatGPT",
     "工具和其它/assets/java工具、常用类库/src=http%3a%2f%2finews.gtimg.com%2fnewsapp_bt%2f0%2f14004711543%2f1000&refer=http%3a%2f%2finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg",

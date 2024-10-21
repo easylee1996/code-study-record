@@ -1,4 +1,7 @@
 软件下载：云盘-软件-appium
+
+在高版本系统的windows中，如果无法安装jdk8，尝试切换输入法，可能是输入法导致安装程序闪退
+
 环境配置：
 ```py
 JAVA_HOME   d:\tools\java\jdk1.8.0_211

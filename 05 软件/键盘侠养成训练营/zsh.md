@@ -6,6 +6,10 @@ Zsh(Z shell)是一种功能强大的shell，比系统自带的bash shell更加�
 
 oh-my-zsh是一个针对zsh shell的开源框架，很多功能和插件都是基于这个框架的，所以一般这个是必须安装的。
 
+windows也可以安装，但是不是直接应用在终端上，而是必须在git bash上(类似linux的命令行，由git提供)
+具体配置参考如下：
+[Windows安装Zsh终端前言 本文以 Git Bash 终端为基础，来安装 Zsh终端和 powerlevel10k - 掘金](https://juejin.cn/post/7229507721795993661)
+
 ### 安装
 
 - 首先安装zsh：`brew install zsh`

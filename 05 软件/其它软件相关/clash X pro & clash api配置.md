@@ -12,3 +12,7 @@ secret: 'xxx'
 ```
 必须在 config. yaml 中设置，在其它复制的配置文件中设置是无效的
 具体 api 可以参考 yacd 开源 web 项目或者 [Clash | Clash](https://clash.gitbook.io/doc)
+### DNS配置
+在启用clash之后，会走clash软件的DNS服务，而通常公司内网，会配置一些内网域名，所以需要添加公司内网的DNS，才可以正常解析内网域名
+在配置文件的：dns-nameserver里面进行配置即可
+注意：查看公司内网dns需要先断开clash，否则在网络里面查看的dns是clash修改后的dns

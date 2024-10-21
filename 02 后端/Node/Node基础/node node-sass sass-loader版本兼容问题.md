@@ -51,6 +51,8 @@ sass-loader 10.0.1，node-sass 6.0.1
 3. 推荐还是使用高版本的 node，然后升级 node-sass 和 sass-loader 版本。
 4. 每次操作应该删除 node_modules、package-lock. json 文件 (这个文件不由 git 管理，可能会下载其它分支的包)
 
+> 如果不是为了升级node，一般尝试降级node就行，降级到12，不行14，不行16，都试一下，每次降级都要删除node_modules和package-lock.json
+
 ## 其它方法
 直接放弃node-sass，使用dart-sass无缝替换。
 node-sass与dart-sass区别：
